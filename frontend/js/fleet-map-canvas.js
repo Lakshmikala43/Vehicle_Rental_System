@@ -1,6 +1,6 @@
 /**
  * RentRide HTML5 Canvas Schematic Fleet Board Visualizer
- * Color Theme: Premium Gray & White Slate Palette
+ * Color Theme: Automotive Yellow & White Palette
  */
 class FleetMapCanvas {
   constructor(canvasId) {
@@ -9,9 +9,9 @@ class FleetMapCanvas {
     this.ctx = this.canvas.getContext('2d');
     this.vehicles = [];
     this.branches = [
-      { id: 1, name: 'Central Metro Hub', x: 220, y: 180, color: '#64748B' },
-      { id: 2, name: 'Airport Terminal 2', x: 620, y: 120, color: '#94A3B8' },
-      { id: 3, name: 'Gachibowli Financial', x: 380, y: 360, color: '#64748B' },
+      { id: 1, name: 'Central Metro Hub', x: 220, y: 180, color: '#EAB308' },
+      { id: 2, name: 'Airport Terminal 2', x: 620, y: 120, color: '#F59E0B' },
+      { id: 3, name: 'Gachibowli Financial', x: 380, y: 360, color: '#EAB308' },
       { id: 4, name: 'Bandra Kurla Hub', x: 820, y: 320, color: '#FFFFFF' }
     ];
     this.initCanvas();
@@ -93,11 +93,11 @@ class FleetMapCanvas {
     if (!this.ctx) return;
     const { width, height } = this.canvas;
 
-    this.ctx.fillStyle = '#0B132B';
+    this.ctx.fillStyle = '#0A0A0A';
     this.ctx.fillRect(0, 0, width, height);
 
     // Grid Lines
-    this.ctx.strokeStyle = '#1E293B';
+    this.ctx.strokeStyle = '#262626';
     this.ctx.lineWidth = 1;
     for (let x = 0; x < width; x += 40) {
       this.ctx.beginPath();
@@ -113,7 +113,7 @@ class FleetMapCanvas {
     }
 
     // Branch Connectors
-    this.ctx.strokeStyle = '#334155';
+    this.ctx.strokeStyle = '#EAB308';
     this.ctx.setLineDash([6, 6]);
     this.ctx.lineWidth = 2;
     for (let i = 0; i < this.branches.length; i++) {
@@ -133,7 +133,7 @@ class FleetMapCanvas {
       this.ctx.arc(b.x, b.y, 22, 0, Math.PI * 2);
       this.ctx.fill();
 
-      this.ctx.strokeStyle = '#0F172A';
+      this.ctx.strokeStyle = '#171717';
       this.ctx.lineWidth = 3;
       this.ctx.stroke();
 
@@ -145,7 +145,7 @@ class FleetMapCanvas {
 
     // Vehicles
     this.vehicles.forEach(v => {
-      let color = '#94A3B8'; // AVAILABLE Cool Silver Gray
+      let color = '#EAB308'; // AVAILABLE Automotive Yellow
       if (v.status === 'RENTED' || v.status === 'RESERVED') color = '#FFFFFF'; // White
       if (v.status === 'MAINTENANCE' || v.status === 'DAMAGED') color = '#DC2626'; // Red
 
@@ -154,11 +154,11 @@ class FleetMapCanvas {
       this.ctx.arc(v.x, v.y, 12, 0, Math.PI * 2);
       this.ctx.fill();
 
-      this.ctx.strokeStyle = '#0F172A';
+      this.ctx.strokeStyle = '#171717';
       this.ctx.lineWidth = 2.5;
       this.ctx.stroke();
 
-      this.ctx.fillStyle = '#CBD5E1';
+      this.ctx.fillStyle = '#F59E0B';
       this.ctx.font = 'bold 11px Inter, sans-serif';
       this.ctx.textAlign = 'center';
       this.ctx.fillText(v.licensePlate, v.x, v.y - 15);
@@ -197,7 +197,7 @@ class FleetMapCanvas {
           <div class="rf-modal-body">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem;">
               <span class="rf-badge ${isAvailable ? 'rf-badge-available' : (isRentedOrReserved ? 'rf-badge-reserved' : 'rf-badge-maintenance')}">${vehicle.status}</span>
-              <span style="font-weight:900; font-size:1.1rem; color:#0F172A;">${vehicle.licensePlate}</span>
+              <span style="font-weight:900; font-size:1.1rem; color:#171717;">${vehicle.licensePlate}</span>
             </div>
 
             <div style="background:var(--rf-bg-main); border:1px solid var(--rf-border-light); padding:1.2rem; border-radius:var(--rf-radius-md); margin-bottom:1.5rem;">
@@ -212,14 +212,14 @@ class FleetMapCanvas {
             </div>
 
             ${isAvailable ? `
-              <div style="background:var(--rf-accent-yellow-light); border:1.5px solid var(--rf-accent-yellow); padding:1rem; border-radius:var(--rf-radius-md); margin-bottom:1.5rem; text-align:center; font-weight:800; color:#0F172A;">
+              <div style="background:var(--rf-accent-yellow-light); border:1.5px solid var(--rf-accent-yellow); padding:1rem; border-radius:var(--rf-radius-md); margin-bottom:1.5rem; text-align:center; font-weight:800; color:#171717;">
                 ✓ This vehicle is currently AVAILABLE for instant rental!
               </div>
               <button onclick="document.getElementById('fleetVehicleDetailModal').remove(); App.openBookingModal(${vehicle.vehicleId});" class="rf-btn rf-btn-primary" style="width:100%; padding:0.85rem; font-size:1rem;">
                 ⚡ Book This Available Vehicle Now
               </button>
             ` : `
-              <div style="background:${isRentedOrReserved ? '#0F172A' : 'var(--rf-status-red-light)'}; color:${isRentedOrReserved ? '#FFFFFF' : 'var(--rf-status-red)'}; border:1.5px solid ${isRentedOrReserved ? 'var(--rf-accent-yellow)' : 'var(--rf-status-red)'}; padding:1.2rem; border-radius:var(--rf-radius-md); margin-bottom:1.5rem;">
+              <div style="background:${isRentedOrReserved ? '#171717' : 'var(--rf-status-red-light)'}; color:${isRentedOrReserved ? 'var(--rf-accent-yellow-bright)' : 'var(--rf-status-red)'}; border:1.5px solid ${isRentedOrReserved ? 'var(--rf-accent-yellow)' : 'var(--rf-status-red)'}; padding:1.2rem; border-radius:var(--rf-radius-md); margin-bottom:1.5rem;">
                 <div style="font-weight:900; font-size:0.95rem; margin-bottom:0.4rem;">
                   ${isRentedOrReserved ? '⏳ Currently Rented / Reserved' : '🔧 Under Maintenance'}
                 </div>

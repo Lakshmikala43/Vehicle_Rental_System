@@ -1,6 +1,6 @@
 /* ============================================================================
-   RentRide Main Stylesheet - Premium Gray & White Theme
-   Matching Official Uploaded Logo Asset
+   RentRide Main Stylesheet - Automotive Yellow & White Theme
+   High-Contrast Modern Visual Identity
    ============================================================================ */
 
 @import url('./variables.css');
@@ -37,7 +37,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   border-bottom: 3px solid var(--rf-accent-yellow);
 }
 
@@ -61,7 +61,7 @@ a {
   object-fit: contain;
   background: #FFFFFF;
   padding: 3px 6px;
-  box-shadow: 0 0 12px rgba(51, 65, 85, 0.3);
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
   border: 1.5px solid var(--rf-accent-yellow);
 }
 
@@ -106,13 +106,13 @@ a {
 
 .rf-btn-primary {
   background-color: var(--rf-accent-yellow);
-  color: #FFFFFF;
+  color: #000000;
 }
 
 .rf-btn-primary:hover {
-  background-color: #0F172A;
+  background-color: var(--rf-accent-yellow-bright);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.4);
+  box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
 }
 
 .rf-btn-secondary {
@@ -122,14 +122,14 @@ a {
 }
 
 .rf-btn-secondary:hover {
-  background-color: #334155;
+  background-color: #404040;
   color: var(--rf-accent-yellow-bright);
 }
 
 .rf-btn-outline {
   background-color: transparent;
   border-color: var(--rf-accent-yellow);
-  color: var(--rf-accent-yellow);
+  color: #000000;
 }
 
 .rf-btn-outline:hover {
@@ -139,7 +139,7 @@ a {
 
 /* HERO SECTION */
 .rf-hero {
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  background: linear-gradient(135deg, #171717 0%, #262626 100%);
   color: var(--rf-text-on-dark);
   padding: 5rem 2rem 5.5rem 2rem;
   position: relative;
@@ -158,7 +158,7 @@ a {
 
 .rf-hero-badge {
   display: inline-block;
-  background-color: rgba(51, 65, 85, 0.3);
+  background-color: rgba(234, 179, 8, 0.18);
   color: var(--rf-accent-yellow-bright);
   padding: 0.4rem 1rem;
   border-radius: 50px;
@@ -167,7 +167,7 @@ a {
   letter-spacing: 0.8px;
   margin-bottom: 1.2rem;
   text-transform: uppercase;
-  border: 1px solid rgba(100, 116, 139, 0.4);
+  border: 1px solid rgba(234, 179, 8, 0.35);
 }
 
 .rf-hero-title {
@@ -249,7 +249,7 @@ a {
 
 .rf-form-control:focus {
   border-color: var(--rf-accent-yellow);
-  box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.2);
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
 }
 
 /* MAIN CONTAINER & GRID */
@@ -265,7 +265,7 @@ a {
   font-weight: 900;
   margin-bottom: 0.5rem;
   letter-spacing: -0.8px;
-  color: #0F172A;
+  color: #171717;
 }
 
 .rf-section-title span {
@@ -335,5 +335,5 @@ a {
   justify-content: space-between;
   align-items: center;
   font-size: 0.85rem;
-  color: #64748B;
+  color: #737373;
 }

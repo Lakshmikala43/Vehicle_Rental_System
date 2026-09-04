@@ -1,5 +1,5 @@
 /* ============================================================================
-   RentRide Components & UI Elements - Premium Gray & White Theme
+   RentRide Components & UI Elements - Yellow & White Theme
    ============================================================================ */
 
 /* VEHICLE CARD */
@@ -23,7 +23,7 @@
 .rf-card-image-wrap {
   position: relative;
   height: 210px;
-  background-color: #0F172A;
+  background-color: #171717;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -53,7 +53,7 @@
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.9px;
-  color: #FFFFFF;
+  color: #000000;
   background-color: var(--rf-accent-yellow);
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
@@ -66,7 +66,7 @@
   font-size: 1.3rem;
   font-weight: 900;
   margin-bottom: 0.5rem;
-  color: #0F172A;
+  color: #171717;
 }
 
 .rf-card-specs {
@@ -96,7 +96,7 @@
 .rf-card-price {
   font-size: 1.35rem;
   font-weight: 900;
-  color: #0F172A;
+  color: #171717;
 }
 
 .rf-card-price span {
@@ -120,19 +120,19 @@
 
 .rf-badge-available {
   background-color: var(--rf-accent-yellow-light);
-  color: #0F172A;
+  color: #000000;
   border: 1.5px solid var(--rf-accent-yellow);
 }
 
 .rf-badge-reserved {
-  background-color: #0F172A;
-  color: #FFFFFF;
-  border: 1.5px solid #0F172A;
+  background-color: #171717;
+  color: var(--rf-accent-yellow-bright);
+  border: 1.5px solid #171717;
 }
 
 .rf-badge-rented {
-  background-color: #F1F5F9;
-  color: #0F172A;
+  background-color: #F8FAFC;
+  color: #171717;
   border: 1.5px solid #CBD5E1;
 }
 
@@ -146,7 +146,7 @@
 .rf-tab-btn, .rr-tab-btn {
   flex: 1;
   padding: 0.75rem 0.5rem;
-  background-color: #1E293B;
+  background-color: #262626;
   color: #94A3B8;
   border: 1.5px solid var(--rf-border-dark);
   border-bottom: none;
@@ -159,12 +159,12 @@
 
 .rf-tab-btn.active, .rr-tab-btn.active {
   background-color: var(--rf-accent-yellow);
-  color: #FFFFFF;
+  color: #000000;
   border-color: var(--rf-accent-yellow);
 }
 
 .rf-tab-btn:hover:not(.active), .rr-tab-btn:hover:not(.active) {
-  background-color: #334155;
+  background-color: #404040;
   color: #FFFFFF;
 }
 
@@ -172,7 +172,7 @@
 .rf-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.82);
+  background-color: rgba(23, 23, 23, 0.82);
   backdrop-filter: blur(5px);
   display: grid;
   place-items: center;
@@ -200,7 +200,7 @@
 
 .rf-modal-header {
   padding: 1.3rem 1.8rem;
-  background-color: #0F172A;
+  background-color: #171717;
   color: #FFFFFF;
   border-bottom: 2px solid var(--rf-accent-yellow);
   display: flex;

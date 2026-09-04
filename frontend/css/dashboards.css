@@ -1,6 +1,6 @@
 /* ============================================================================
    RentRide Dashboard & Operations Visualizer Styles (dashboards.css)
-   Premium Gray & White Palette
+   Automotive Yellow & White Palette
    ============================================================================ */
 
 .rf-dashboard-grid {
@@ -38,7 +38,7 @@
 .rf-kpi-value {
   font-size: 2.4rem;
   font-weight: 900;
-  color: #0F172A;
+  color: #171717;
   line-height: 1;
   margin-bottom: 0.5rem;
 }
@@ -71,8 +71,8 @@
 }
 
 .rf-table th {
-  background-color: #0F172A;
-  color: #FFFFFF;
+  background-color: #171717;
+  color: var(--rf-accent-yellow-bright);
   padding: 1.1rem 1.4rem;
   font-size: 0.82rem;
   font-weight: 800;
@@ -94,11 +94,11 @@
 
 /* FLEET BOARD CANVAS CONTAINER */
 .rf-fleet-board-container {
-  background-color: #0F172A;
+  background-color: #171717;
   border-radius: var(--rf-radius-lg);
   padding: 1.8rem;
   border: 2px solid var(--rf-accent-yellow);
-  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.6);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
   color: #FFFFFF;
 }
 
@@ -112,11 +112,11 @@
 .rf-canvas-wrap {
   width: 100%;
   height: 490px;
-  background-color: #0B132B;
+  background-color: #0A0A0A;
   border-radius: var(--rf-radius-md);
   position: relative;
   overflow: hidden;
-  border: 1px solid #1E293B;
+  border: 1px solid #262626;
 }
 
 canvas#fleetMapCanvas {
@@ -142,8 +142,8 @@ canvas#fleetMapCanvas {
 }
 
 .rf-car-part {
-  fill: #F1F5F9;
-  stroke: #0F172A;
+  fill: #F8FAFC;
+  stroke: #171717;
   stroke-width: 2.5;
   transition: fill var(--rf-transition-fast);
 }
