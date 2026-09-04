@@ -27,7 +27,7 @@
   <main class="rf-container" style="padding-top:2.5rem;">
     <div style="margin-bottom:2rem;">
       <h1 class="rf-section-title">Vehicle & Bike Search Catalog</h1>
-      <p class="rf-section-subtitle">Select your filter options below and click <strong>Apply Filters</strong> to view available fleet.</p>
+      <p class="rf-section-subtitle">Filter our RentRide fleet by category (SUV, Sedan, Hatchback, Motorbike, EV), fuel type, or transmission.</p>
     </div>
 
     <!-- FILTER BAR -->
@@ -35,7 +35,7 @@
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)) auto; gap:1.2rem; align-items:end;">
         <div class="rf-form-group">
           <label>Vehicle Category</label>
-          <select id="filterCategory" class="rf-form-control" onchange="handleCategoryChange()">
+          <select id="filterCategory" class="rf-form-control" onchange="handleCategoryChange(); App.loadCatalogVehicles();">
             <option value="">All Categories (30 Vehicles & Bikes)</option>
             <option value="SUV">SUV</option>
             <option value="Sedan">Sedan</option>
@@ -46,7 +46,7 @@
         </div>
         <div class="rf-form-group">
           <label>Fuel Type</label>
-          <select id="filterFuel" class="rf-form-control">
+          <select id="filterFuel" class="rf-form-control" onchange="App.loadCatalogVehicles()">
             <option value="">All Fuel Types</option>
             <option value="PETROL">Petrol</option>
             <option value="DIESEL">Diesel</option>
@@ -55,7 +55,7 @@
         </div>
         <div class="rf-form-group">
           <label>Transmission</label>
-          <select id="filterTransmission" class="rf-form-control">
+          <select id="filterTransmission" class="rf-form-control" onchange="App.loadCatalogVehicles()">
             <option value="">All Transmissions</option>
             <option value="AUTOMATIC">Automatic</option>
             <option value="MANUAL">Manual</option>
