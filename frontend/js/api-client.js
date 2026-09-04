@@ -77,13 +77,14 @@ class ApiClient {
  */
 class MockDataStore {
   static init() {
-    // Clear legacy seed to ensure fresh Top 25 Best-Selling Cars & Bikes catalog
-    if (localStorage.getItem('rf_db_seeded_v3') !== 'true') {
+    // FORCE UPDATE to v4 seed so that all 30 Top 25 Best-Selling Cars & Bikes load immediately
+    if (localStorage.getItem('rf_db_seeded_v4') !== 'true') {
       localStorage.removeItem('rf_vehicles');
-      localStorage.setItem('rf_db_seeded_v3', 'true');
+      localStorage.removeItem('rf_bookings');
+      localStorage.setItem('rf_db_seeded_v4', 'true');
     }
 
-    if (!localStorage.getItem('rf_vehicles') || JSON.parse(localStorage.getItem('rf_vehicles')).length < 10) {
+    if (!localStorage.getItem('rf_vehicles') || JSON.parse(localStorage.getItem('rf_vehicles')).length < 20) {
       const branches = [
         { id: 1, branchCode: 'BR-BLR-01', name: 'Central Metro Hub', address: 'MG Road, Brigade Junction', city: 'Bangalore', latitude: 12.9716, longitude: 77.5946 },
         { id: 2, branchCode: 'BR-BLR-02', name: 'Airport Terminal 2 Branch', address: 'KIA Terminal 2 Hub', city: 'Bangalore', latitude: 13.1986, longitude: 77.7066 },
@@ -91,7 +92,7 @@ class MockDataStore {
         { id: 4, branchCode: 'BR-MUM-01', name: 'Bandra Kurla Hub', address: 'BKC G Block', city: 'Mumbai', latitude: 19.0600, longitude: 72.8680 }
       ];
 
-      // TOP 25 BEST-SELLING CARS & MOTORBIKES CATALOG
+      // TOP 25 BEST-SELLING CARS & MOTORBIKES CATALOG (30 VEHICLES)
       const rawCatalog = [
         { name: 'Swift ZXi', brand: 'Maruti Suzuki', cat: 'Hatchback', fuel: 'PETROL', trans: 'MANUAL', seats: 5, rate: 1800 },
         { name: 'Baleno Alpha', brand: 'Maruti Suzuki', cat: 'Hatchback', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 2100 },
@@ -196,7 +197,7 @@ class MockDataStore {
       localStorage.setItem('rf_maintenance', JSON.stringify(initialMaintenance));
       localStorage.setItem('rf_inspections', JSON.stringify([]));
       localStorage.setItem('rf_damages', JSON.stringify([]));
-      localStorage.setItem('rf_db_seeded', 'true');
+      localStorage.setItem('rf_db_seeded_v4', 'true');
     }
   }
 

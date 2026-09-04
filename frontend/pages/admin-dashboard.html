@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <!-- ROLE-SCOPED ADMIN HEADER WITH OFFICIAL LOGO IMAGE -->
+  <!-- ROLE-SCOPED ADMIN HEADER WITH UNIFORM CAR & BIKE LOGO -->
   <header class="rf-header">
     <a href="../index.html" class="rf-brand">
       <img src="../assets/logo.jpg" alt="RentRide Logo" class="rf-brand-img">
@@ -39,8 +39,8 @@
     <!-- EXECUTIVE KPIS -->
     <div class="rf-dashboard-grid" style="margin-bottom:3rem;">
       <div class="rf-kpi-card">
-        <span class="rf-kpi-label">Total Fleet Vehicles</span>
-        <div id="admTotalVehicles" class="rf-kpi-value">25</div>
+        <span class="rf-kpi-label">Total Fleet Vehicles & Bikes</span>
+        <div id="admTotalVehicles" class="rf-kpi-value">30</div>
         <span class="rf-kpi-trend positive">✓ Active Management</span>
       </div>
       <div class="rf-kpi-card">
@@ -174,10 +174,10 @@
                 <div class="rf-form-group" style="margin-bottom:1rem;">
                   <label>Vehicle ID</label>
                   <select id="woVehicleId" class="rf-form-control">
-                    <option value="1">Toyota Innova Crysta (KA-01-RF-1001)</option>
-                    <option value="2">BMW 5 Series (KA-01-RF-1002)</option>
-                    <option value="3">Tesla Model 3 (KA-01-RF-1003)</option>
-                    <option value="4">Hyundai Creta (KA-01-RF-1004)</option>
+                    <option value="1">Swift ZXi (KA-01-RF-1001)</option>
+                    <option value="2">Baleno Alpha (KA-01-RF-1002)</option>
+                    <option value="5">Creta SX(O) (KA-01-RF-1005)</option>
+                    <option value="26">Himalayan 450 Sherpa (KA-01-RF-1026)</option>
                   </select>
                 </div>
                 <div class="rf-form-group" style="margin-bottom:1rem;">
@@ -230,9 +230,9 @@
     function exportCSVReport() {
       const csvContent = "data:text/csv;charset=utf-8," 
         + "VIN,LicensePlate,Model,Branch,OdometerKM,HourlyRate,DailyRate,Status\n"
-        + "RFVIN10000001,KA-01-RF-1001,Toyota Innova Crysta,Central Metro,14200,200,2900,AVAILABLE\n"
-        + "RFVIN10000002,KA-01-RF-1002,BMW 5 Series,Airport Terminal 2,22400,450,6500,AVAILABLE\n"
-        + "RFVIN10000003,KA-01-RF-1003,Tesla Model 3,Gachibowli Hub,8900,350,4800,AVAILABLE\n";
+        + "RFVIN10000001,KA-01-RF-1001,Swift ZXi,Central Metro,14200,128,1800,AVAILABLE\n"
+        + "RFVIN10000002,KA-01-RF-1002,Baleno Alpha,Airport Terminal 2,22400,150,2100,AVAILABLE\n"
+        + "RFVIN10000005,KA-01-RF-1005,Creta SX(O),Gachibowli Hub,8900,228,3200,AVAILABLE\n";
       
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
