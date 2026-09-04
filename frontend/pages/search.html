@@ -82,8 +82,12 @@
   <script>
     function handleCategoryChange() {
       const cat = document.getElementById('filterCategory').value;
+      const fuelSelect = document.getElementById('filterFuel');
       if (cat === 'Electric') {
-        document.getElementById('filterFuel').value = 'ELECTRIC';
+        fuelSelect.value = 'ELECTRIC';
+      } else if (fuelSelect.value === 'ELECTRIC' && cat !== '') {
+        // If switching from Electric to SUV/Sedan/Hatchback, reset fuel dropdown so vehicles show cleanly
+        fuelSelect.value = '';
       }
     }
   </script>
