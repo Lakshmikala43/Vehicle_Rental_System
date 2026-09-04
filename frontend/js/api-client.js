@@ -1,6 +1,6 @@
 /**
- * RideFleet High-Performance API Client & In-Memory Data Store Engine
- * Includes Full Dynamic Execution for Maintenance Work Orders
+ * RentRide High-Performance API Client & In-Memory Data Store Engine
+ * Includes Top 25 Best-Selling Cars & Motorbikes Catalog Data
  */
 const API_BASE_URL = 'http://localhost:8080/api';
 
@@ -77,7 +77,13 @@ class ApiClient {
  */
 class MockDataStore {
   static init() {
-    if (!localStorage.getItem('rf_db_seeded')) {
+    // Clear legacy seed to ensure fresh Top 25 Best-Selling Cars & Bikes catalog
+    if (localStorage.getItem('rf_db_seeded_v3') !== 'true') {
+      localStorage.removeItem('rf_vehicles');
+      localStorage.setItem('rf_db_seeded_v3', 'true');
+    }
+
+    if (!localStorage.getItem('rf_vehicles') || JSON.parse(localStorage.getItem('rf_vehicles')).length < 10) {
       const branches = [
         { id: 1, branchCode: 'BR-BLR-01', name: 'Central Metro Hub', address: 'MG Road, Brigade Junction', city: 'Bangalore', latitude: 12.9716, longitude: 77.5946 },
         { id: 2, branchCode: 'BR-BLR-02', name: 'Airport Terminal 2 Branch', address: 'KIA Terminal 2 Hub', city: 'Bangalore', latitude: 13.1986, longitude: 77.7066 },
@@ -85,38 +91,64 @@ class MockDataStore {
         { id: 4, branchCode: 'BR-MUM-01', name: 'Bandra Kurla Hub', address: 'BKC G Block', city: 'Mumbai', latitude: 19.0600, longitude: 72.8680 }
       ];
 
-      const vehicles = [
-        {
-          id: 1, vin: 'RFVIN10000001', licensePlate: 'KA-01-RF-1001', color: 'Graphite Black',
-          model: { modelName: 'Innova Crysta VX', modelYear: 2024, seatingCapacity: 7, fuelType: 'DIESEL', transmissionType: 'AUTOMATIC', brand: { name: 'Toyota' }, type: { category: 'SUV' } },
-          branch: branches[0], odometerKm: 14200, hourlyRate: 200, dailyRate: 2900, securityDeposit: 5000, status: 'AVAILABLE', fuelLevelPercent: 95, healthScore: 98
-        },
-        {
-          id: 2, vin: 'RFVIN10000002', licensePlate: 'KA-01-RF-1002', color: 'Pearl White',
-          model: { modelName: '5 Series 530i', modelYear: 2023, seatingCapacity: 5, fuelType: 'PETROL', transmissionType: 'AUTOMATIC', brand: { name: 'BMW' }, type: { category: 'Luxury' } },
-          branch: branches[1], odometerKm: 22400, hourlyRate: 450, dailyRate: 6500, securityDeposit: 10000, status: 'AVAILABLE', fuelLevelPercent: 88, healthScore: 94
-        },
-        {
-          id: 3, vin: 'RFVIN10000003', licensePlate: 'KA-01-RF-1003', color: 'Copper Amber',
-          model: { modelName: 'Model 3 Long Range', modelYear: 2024, seatingCapacity: 5, fuelType: 'ELECTRIC', transmissionType: 'AUTOMATIC', brand: { name: 'Tesla' }, type: { category: 'Electric' } },
-          branch: branches[2], odometerKm: 8900, hourlyRate: 350, dailyRate: 4800, securityDeposit: 7500, status: 'AVAILABLE', fuelLevelPercent: 100, healthScore: 99
-        },
-        {
-          id: 4, vin: 'RFVIN10000004', licensePlate: 'KA-01-RF-1004', color: 'Matte Silver',
-          model: { modelName: 'Creta SX(O)', modelYear: 2024, seatingCapacity: 5, fuelType: 'PETROL', transmissionType: 'MANUAL', brand: { name: 'Hyundai' }, type: { category: 'SUV' } },
-          branch: branches[0], odometerKm: 18500, hourlyRate: 160, dailyRate: 2200, securityDeposit: 4000, status: 'AVAILABLE', fuelLevelPercent: 90, healthScore: 96
-        },
-        {
-          id: 5, vin: 'RFVIN10000005', licensePlate: 'KA-01-RF-1005', color: 'Teal Blue',
-          model: { modelName: 'Nexon EV Empowered+', modelYear: 2024, seatingCapacity: 5, fuelType: 'ELECTRIC', transmissionType: 'AUTOMATIC', brand: { name: 'Tata Motors' }, type: { category: 'Electric' } },
-          branch: branches[1], odometerKm: 11200, hourlyRate: 180, dailyRate: 2500, securityDeposit: 5000, status: 'AVAILABLE', fuelLevelPercent: 92, healthScore: 97
-        },
-        {
-          id: 6, vin: 'RFVIN10000006', licensePlate: 'KA-01-RF-1006', color: 'Deep Charcoal',
-          model: { modelName: 'City ZX', modelYear: 2023, seatingCapacity: 5, fuelType: 'PETROL', transmissionType: 'AUTOMATIC', brand: { name: 'Honda' }, type: { category: 'Sedan' } },
-          branch: branches[3], odometerKm: 26000, hourlyRate: 170, dailyRate: 2400, securityDeposit: 4500, status: 'AVAILABLE', fuelLevelPercent: 85, healthScore: 92
-        }
+      // TOP 25 BEST-SELLING CARS & MOTORBIKES CATALOG
+      const rawCatalog = [
+        { name: 'Swift ZXi', brand: 'Maruti Suzuki', cat: 'Hatchback', fuel: 'PETROL', trans: 'MANUAL', seats: 5, rate: 1800 },
+        { name: 'Baleno Alpha', brand: 'Maruti Suzuki', cat: 'Hatchback', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 2100 },
+        { name: 'Brezza ZXi+', brand: 'Maruti Suzuki', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 2600 },
+        { name: 'Ertiga ZXi', brand: 'Maruti Suzuki', cat: 'SUV', fuel: 'PETROL', trans: 'MANUAL', seats: 7, rate: 2800 },
+        { name: 'Creta SX(O)', brand: 'Hyundai', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 3200 },
+        { name: 'Dzire VXi', brand: 'Maruti Suzuki', cat: 'Sedan', fuel: 'PETROL', trans: 'MANUAL', seats: 5, rate: 1900 },
+        { name: 'Fronx Alpha Turbo', brand: 'Maruti Suzuki', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 2400 },
+        { name: 'WagonR ZXi', brand: 'Maruti Suzuki', cat: 'Hatchback', fuel: 'PETROL', trans: 'MANUAL', seats: 5, rate: 1500 },
+        { name: 'Nexon Fearless+', brand: 'Tata Motors', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 2700 },
+        { name: 'Eeco 7-STR', brand: 'Maruti Suzuki', cat: 'SUV', fuel: 'PETROL', trans: 'MANUAL', seats: 7, rate: 1600 },
+        { name: 'Punch Creative', brand: 'Tata Motors', cat: 'SUV', fuel: 'PETROL', trans: 'MANUAL', seats: 5, rate: 2000 },
+        { name: 'Scorpio-N Z8L', brand: 'Mahindra', cat: 'SUV', fuel: 'DIESEL', trans: 'AUTOMATIC', seats: 7, rate: 4200 },
+        { name: 'Venue SX(O)', brand: 'Hyundai', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 2500 },
+        { name: 'Seltos GTX+ Turbo', brand: 'Kia Motors', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 3400 },
+        { name: 'Grand Vitara Alpha Hybrid', brand: 'Maruti Suzuki', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 3500 },
+        { name: 'Tiago XZ+', brand: 'Tata Motors', cat: 'Hatchback', fuel: 'PETROL', trans: 'MANUAL', seats: 5, rate: 1600 },
+        { name: 'Innova Crysta VX', brand: 'Toyota', cat: 'SUV', fuel: 'DIESEL', trans: 'AUTOMATIC', seats: 7, rate: 3900 },
+        { name: 'Bolero Neo N10', brand: 'Mahindra', cat: 'SUV', fuel: 'DIESEL', trans: 'MANUAL', seats: 7, rate: 2600 },
+        { name: 'Altroz XZ+', brand: 'Tata Motors', cat: 'Hatchback', fuel: 'DIESEL', trans: 'MANUAL', seats: 5, rate: 2100 },
+        { name: 'Alto K10 VXi+', brand: 'Maruti Suzuki', cat: 'Hatchback', fuel: 'PETROL', trans: 'MANUAL', seats: 5, rate: 1200 },
+        { name: 'Exter SX(O) Connect', brand: 'Hyundai', cat: 'SUV', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 2200 },
+        { name: 'XUV700 AX7 Luxury', brand: 'Mahindra', cat: 'SUV', fuel: 'DIESEL', trans: 'AUTOMATIC', seats: 7, rate: 4800 },
+        { name: 'Carens Luxury Plus', brand: 'Kia Motors', cat: 'SUV', fuel: 'DIESEL', trans: 'AUTOMATIC', seats: 7, rate: 3300 },
+        { name: 'Grand i10 Nios Asta', brand: 'Hyundai', cat: 'Hatchback', fuel: 'PETROL', trans: 'AUTOMATIC', seats: 5, rate: 1800 },
+        { name: 'Thar LX 4x4', brand: 'Mahindra', cat: 'SUV', fuel: 'DIESEL', trans: 'AUTOMATIC', seats: 4, rate: 3800 },
+        // MOTORBIKES
+        { name: 'Himalayan 450 Sherpa', brand: 'Royal Enfield', cat: 'Motorbike', fuel: 'PETROL', trans: 'MANUAL', seats: 2, rate: 1800 },
+        { name: 'Ninja 400 ABS', brand: 'Kawasaki', cat: 'Motorbike', fuel: 'PETROL', trans: 'MANUAL', seats: 2, rate: 2500 },
+        { name: '450X Apex EV', brand: 'Ather Energy', cat: 'Motorbike', fuel: 'ELECTRIC', trans: 'AUTOMATIC', seats: 2, rate: 1100 },
+        { name: 'Hunter 350 Dapper', brand: 'Royal Enfield', cat: 'Motorbike', fuel: 'PETROL', trans: 'MANUAL', seats: 2, rate: 1400 },
+        { name: 'R 1250 GS Adventure', brand: 'BMW Motorrad', cat: 'Motorbike', fuel: 'PETROL', trans: 'MANUAL', seats: 2, rate: 4500 }
       ];
+
+      const vehicles = rawCatalog.map((item, idx) => ({
+        id: idx + 1,
+        vin: `RFVIN${10000000 + idx + 1}`,
+        licensePlate: `KA-01-RF-${1000 + idx + 1}`,
+        color: 'Pearl Executive',
+        model: {
+          modelName: item.name,
+          modelYear: 2024,
+          seatingCapacity: item.seats,
+          fuelType: item.fuel,
+          transmissionType: item.trans,
+          brand: { name: item.brand },
+          type: { category: item.cat }
+        },
+        branch: branches[idx % branches.length],
+        odometerKm: 8500 + (idx * 1200),
+        hourlyRate: Math.round(item.rate / 14),
+        dailyRate: item.rate,
+        securityDeposit: item.cat === 'Motorbike' ? 2000 : 5000,
+        status: 'AVAILABLE',
+        fuelLevelPercent: 95 - (idx % 10),
+        healthScore: 98
+      }));
 
       const addOns = [
         { id: 1, code: 'ADD_CHILD_SEAT', name: 'Infant Safety Child Seat', pricePerDay: 350 },
@@ -153,11 +185,6 @@ class MockDataStore {
           id: 2, workOrderNumber: 'WO-RF-98432', vehicle: vehicles[0],
           vehicleLabel: 'Toyota Innova Crysta (KA-01-RF-1001)', maintenanceType: 'CORRECTIVE',
           vendorName: 'Toyota Express Service Center', cost: 8200, status: 'IN_PROGRESS'
-        },
-        {
-          id: 3, workOrderNumber: 'WO-RF-98433', vehicle: vehicles[2],
-          vehicleLabel: 'Tesla Model 3 (KA-01-RF-1003)', maintenanceType: 'PREVENTIVE',
-          vendorName: 'Tesla Service Center Hub', cost: 6500, status: 'IN_PROGRESS'
         }
       ];
 
@@ -187,7 +214,7 @@ class MockDataStore {
       if (username === 'staff') { roles = ['STAFF']; fullName = 'Branch Officer'; }
       if (username === 'fleetmgr') { roles = ['FLEET_MANAGER']; fullName = 'Fleet Lead'; }
 
-      return { token: 'mock_jwt_token_' + Date.now(), id: 1, username, email: `${username}@ridefleet.com`, fullName, roles };
+      return { token: 'mock_jwt_token_' + Date.now(), id: 1, username, email: `${username}@rentride.com`, fullName, roles };
     }
 
     if (endpoint.startsWith('/auth/me')) {
@@ -204,7 +231,6 @@ class MockDataStore {
         item.status = 'COMPLETED';
         localStorage.setItem('rf_maintenance', JSON.stringify(maintenanceList));
 
-        // Restore vehicle status back to AVAILABLE
         const vehicles = JSON.parse(localStorage.getItem('rf_vehicles'));
         const targetV = vehicles.find(v => v.id === item.vehicle.id);
         if (targetV) {
@@ -232,7 +258,6 @@ class MockDataStore {
         status: 'IN_PROGRESS'
       };
 
-      // Mark vehicle as MAINTENANCE
       vehicle.status = 'MAINTENANCE';
       localStorage.setItem('rf_vehicles', JSON.stringify(vehicles));
 
@@ -311,7 +336,7 @@ class MockDataStore {
       }
 
       const bookings = JSON.parse(localStorage.getItem('rf_bookings'));
-      const booking = bookings.find(b => b.id === body.bookingId) || bookings[0];
+      const booking = bookings.find(b => b.id === body.bookingId) || booking[0];
       booking.status = 'CONFIRMED';
       localStorage.setItem('rf_bookings', JSON.stringify(bookings));
 
