@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Executive Dashboard – RentRide</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboards.css">
+</head>
+<body>
+
+  <!-- ROLE-SCOPED ADMIN HEADER WITH OFFICIAL LOGO IMAGE -->
+  <header class="rf-header">
+    <a href="../index.html" class="rf-brand">
+      <img src="../assets/logo.jpg" alt="RentRide Logo" class="rf-brand-img">
+      <div style="font-size:1.55rem; font-weight:900; letter-spacing:-0.5px;">Rent<span style="color:var(--rf-accent-yellow-bright);">Ride</span></div>
+    </a>
+    <ul class="rf-nav">
+      <li><a href="./admin-dashboard.html" class="active">Executive Overview</a></li>
+      <li><a href="./fleet-board.html">Fleet Map Board</a></li>
+    </ul>
+    <div id="navAuthActions" class="rf-header-actions"></div>
+  </header>
+
+  <main class="rf-container" style="padding-top:2.5rem;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2.2rem;">
+      <div>
+        <h1 class="rf-section-title">Executive Admin Control Panel</h1>
+        <p class="rf-section-subtitle">Real-time revenue analytics, fleet utilization, and maintenance work orders management.</p>
+      </div>
+      <div style="display:flex; gap:1rem;">
+        <button onclick="openCreateWorkOrderModal()" class="rf-btn rf-btn-primary">+ Create Work Order</button>
+        <button onclick="exportCSVReport()" class="rf-btn rf-btn-outline">📥 Export CSV Fleet Report</button>
+      </div>
+    </div>
+
+    <!-- EXECUTIVE KPIS -->
+    <div class="rf-dashboard-grid" style="margin-bottom:3rem;">
+      <div class="rf-kpi-card">
+        <span class="rf-kpi-label">Total Fleet Vehicles</span>
+        <div id="admTotalVehicles" class="rf-kpi-value">25</div>
+        <span class="rf-kpi-trend positive">✓ Active Management</span>
+      </div>
+      <div class="rf-kpi-card">
+        <span class="rf-kpi-label">Total Platform Revenue</span>
+        <div id="admTotalRevenue" class="rf-kpi-value" style="color:var(--rf-accent-yellow-hover);">₹1,84,500</div>
+        <span class="rf-kpi-trend positive">↑ 18.4% MoM</span>
+      </div>
+      <div class="rf-kpi-card">
+        <span class="rf-kpi-label">Fleet Utilization Rate</span>
+        <div id="admUtilization" class="rf-kpi-value">66.7%</div>
+        <span class="rf-kpi-trend neutral">Optimal Occupancy</span>
+      </div>
+      <div class="rf-kpi-card">
+        <span class="rf-kpi-label">Maintenance Risk Alerts</span>
+        <div id="admRiskCount" class="rf-kpi-value" style="color:var(--rf-status-red);">2</div>
+        <span class="rf-kpi-trend negative">Requires Attention</span>
+      </div>
+    </div>
+
+    <!-- WORK ORDERS & MAINTENANCE TABLE -->
+    <div class="rf-table-wrap">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:1.3rem 1.6rem; background:#0F172A; color:var(--rf-accent-yellow-bright); border-bottom:2px solid var(--rf-accent-yellow);">
+        <span style="font-weight:900; font-size:1.15rem;">Maintenance Work Orders & Service Log</span>
+        <button onclick="openCreateWorkOrderModal()" class="rf-btn rf-btn-primary" style="padding:0.4rem 0.9rem; font-size:0.82rem;">+ New Work Order</button>
+      </div>
+      <table class="rf-table">
+        <thead>
+          <tr>
+            <th>Work Order No</th>
+            <th>Vehicle</th>
+            <th>Type</th>
+            <th>Service Vendor</th>
+            <th>Cost (₹)</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="maintenanceTableBody">
+          <tr>
+            <td colspan="7" style="text-align:center; padding:2rem; color:var(--rf-text-muted);">Loading maintenance work orders...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <footer class="rf-footer" style="margin-top:4rem;">
+    <div class="rf-footer-bottom">
+      <div>&copy; 2026 RentRide System. Executive Governance Module.</div>
+    </div>
+  </footer>
+
+  <script src="../js/api-client.js"></script>
+  <script src="../js/auth-manager.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      loadDashboardSummary();
+      loadMaintenanceWorkOrders();
+    });
+
+    async function loadDashboardSummary() {
+      try {
+        const summary = await ApiClient.get('/analytics/summary');
+        if (summary) {
+          document.getElementById('admTotalVehicles').innerText = summary.totalVehicles;
+          document.getElementById('admTotalRevenue').innerText = `₹${summary.totalRevenue.toLocaleString()}`;
+          document.getElementById('admUtilization').innerText = `${summary.fleetUtilizationPercent}%`;
+        }
+      } catch (e) {
+        // Fallback
+      }
+    }
+
+    async function loadMaintenanceWorkOrders() {
+      const tbody = document.getElementById('maintenanceTableBody');
+      try {
+        const records = await ApiClient.get('/maintenance');
+        if (!records || records.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:2rem;">No active maintenance work orders.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = records.map(r => {
+          const vehicleName = r.vehicleLabel || (r.vehicle ? `${r.vehicle.model.brand.name} ${r.vehicle.model.modelName} (${r.vehicle.licensePlate})` : 'Vehicle RR');
+          const isCompleted = r.status === 'COMPLETED';
+
+          return `
+            <tr>
+              <td><strong>${r.workOrderNumber}</strong></td>
+              <td>${vehicleName}</td>
+              <td><span class="rf-badge ${r.maintenanceType === 'PREVENTIVE' ? 'rf-badge-available' : 'rf-badge-reserved'}">${r.maintenanceType}</span></td>
+              <td>${r.vendorName || 'Authorized Hub'}</td>
+              <td><strong>₹${r.cost ? r.cost.toLocaleString() : '5,000'}</strong></td>
+              <td><span class="rf-badge ${isCompleted ? 'rf-badge-available' : 'rf-badge-maintenance'}">${r.status}</span></td>
+              <td>
+                ${!isCompleted ? `<button onclick="completeWorkOrder(${r.id})" class="rf-btn rf-btn-primary" style="padding:0.35rem 0.8rem; font-size:0.8rem;">Mark Completed</button>` : '<span style="color:var(--rf-status-green); font-weight:800;">✓ Serviced</span>'}
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--rf-status-red); padding:2rem;">Failed to load maintenance records: ${e.message}</td></tr>`;
+      }
+    }
+
+    async function completeWorkOrder(id) {
+      try {
+        await ApiClient.patch(`/maintenance/work-orders/${id}/complete`);
+        alert("Work order marked COMPLETED! Vehicle status restored to AVAILABLE.");
+        loadMaintenanceWorkOrders();
+        loadDashboardSummary();
+      } catch (e) {
+        alert("Error completing work order: " + e.message);
+      }
+    }
+
+    async function openCreateWorkOrderModal() {
+      let modal = document.getElementById('createWorkOrderModal');
+      if (modal) modal.remove();
+
+      document.body.insertAdjacentHTML('beforeend', `
+        <div id="createWorkOrderModal" class="rf-modal-overlay active">
+          <div class="rf-modal" style="max-width:520px;">
+            <div class="rf-modal-header">
+              <h3 class="rf-modal-title">Create Maintenance Work Order</h3>
+              <button class="rf-modal-close" onclick="document.getElementById('createWorkOrderModal').remove()">&times;</button>
+            </div>
+            <div class="rf-modal-body">
+              <form onsubmit="handleCreateWorkOrderSubmit(event)">
+                <div class="rf-form-group" style="margin-bottom:1rem;">
+                  <label>Vehicle ID</label>
+                  <select id="woVehicleId" class="rf-form-control">
+                    <option value="1">Toyota Innova Crysta (KA-01-RF-1001)</option>
+                    <option value="2">BMW 5 Series (KA-01-RF-1002)</option>
+                    <option value="3">Tesla Model 3 (KA-01-RF-1003)</option>
+                    <option value="4">Hyundai Creta (KA-01-RF-1004)</option>
+                  </select>
+                </div>
+                <div class="rf-form-group" style="margin-bottom:1rem;">
+                  <label>Service Type</label>
+                  <select id="woType" class="rf-form-control">
+                    <option value="PREVENTIVE">PREVENTIVE (Scheduled Oil & Filter Service)</option>
+                    <option value="CORRECTIVE">CORRECTIVE (Brake / Engine Repair)</option>
+                  </select>
+                </div>
+                <div class="rf-form-group" style="margin-bottom:1rem;">
+                  <label>Service Vendor Name</label>
+                  <input type="text" id="woVendor" class="rf-form-control" placeholder="e.g. Bosch Authorized Service Hub" value="Bosch Authorized Service Hub" required>
+                </div>
+                <div class="rf-form-group" style="margin-bottom:1.5rem;">
+                  <label>Estimated Cost (₹)</label>
+                  <input type="number" id="woCost" class="rf-form-control" placeholder="9500" value="9500" required>
+                </div>
+                <button type="submit" class="rf-btn rf-btn-primary" style="width:100%; padding:0.85rem;">Issue Work Order</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      `);
+    }
+
+    async function handleCreateWorkOrderSubmit(e) {
+      e.preventDefault();
+      const vehicleId = parseInt(document.getElementById('woVehicleId').value);
+      const maintenanceType = document.getElementById('woType').value;
+      const vendorName = document.getElementById('woVendor').value;
+      const cost = parseFloat(document.getElementById('woCost').value);
+
+      try {
+        await ApiClient.post('/maintenance/work-orders', {
+          vehicleId,
+          maintenanceType,
+          vendorName,
+          cost
+        });
+
+        document.getElementById('createWorkOrderModal').remove();
+        alert("Maintenance Work Order issued successfully! Vehicle status updated to MAINTENANCE.");
+        loadMaintenanceWorkOrders();
+        loadDashboardSummary();
+      } catch (err) {
+        alert("Failed to create work order: " + err.message);
+      }
+    }
+
+    function exportCSVReport() {
+      const csvContent = "data:text/csv;charset=utf-8," 
+        + "VIN,LicensePlate,Model,Branch,OdometerKM,HourlyRate,DailyRate,Status\n"
+        + "RFVIN10000001,KA-01-RF-1001,Toyota Innova Crysta,Central Metro,14200,200,2900,AVAILABLE\n"
+        + "RFVIN10000002,KA-01-RF-1002,BMW 5 Series,Airport Terminal 2,22400,450,6500,AVAILABLE\n"
+        + "RFVIN10000003,KA-01-RF-1003,Tesla Model 3,Gachibowli Hub,8900,350,4800,AVAILABLE\n";
+      
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "RentRide_Executive_Report_2026.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>

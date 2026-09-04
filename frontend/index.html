@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentRide – Executive Vehicle Rental & Fleet Operations</title>
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/dashboards.css">
+  <style>
+    .rr-login-container {
+      max-width: 520px;
+      margin: 3.5rem auto;
+      background: #FFFFFF;
+      border: 2.5px solid var(--rf-accent-yellow);
+      border-radius: var(--rf-radius-lg);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(15,23,42,0.25);
+    }
+    .rr-login-header {
+      background: #0F172A;
+      color: #FFFFFF;
+      padding: 1.8rem 1.8rem 0 1.8rem;
+      border-bottom: 2px solid var(--rf-accent-yellow);
+      text-align: center;
+    }
+    .rr-login-tabs {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 1.4rem;
+    }
+    .rr-tab-btn {
+      flex: 1;
+      padding: 0.8rem 0.5rem;
+      background-color: #1E293B;
+      color: #94A3B8;
+      border: 1.5px solid var(--rf-border-dark);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all var(--rf-transition-fast);
+    }
+    .rr-tab-btn.active {
+      background-color: var(--rf-accent-yellow);
+      color: #FFFFFF;
+      border-color: var(--rf-accent-yellow);
+    }
+    .rr-tab-btn:hover:not(.active) {
+      background-color: #334155;
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CLEAN BRAND HEADER WITH UPLOADED CAR & MOTORBIKE LOGO IMAGE -->
+  <header class="rf-header" style="justify-content:center; padding:1.1rem 2rem;">
+    <a href="./index.html" class="rf-brand">
+      <img src="./assets/logo.jpg" alt="RentRide Logo" class="rf-brand-img">
+      <div style="font-size:1.65rem; font-weight:900; letter-spacing:-0.5px;">Rent<span style="color:var(--rf-accent-yellow-bright);">Ride</span></div>
+    </a>
+    <div id="navAuthActions" class="rf-header-actions" style="display:none;"></div>
+  </header>
+
+  <!-- HOME PAGE LOGIN DASHBOARD CONTAINER -->
+  <main class="rf-container" style="padding-top:2.5rem;">
+    
+    <div style="text-align:center; margin-bottom:1rem;">
+      <h1 class="rf-section-title" style="font-size:2.6rem;">Rent<span>Ride</span> Executive Access</h1>
+      <p class="rf-section-subtitle">Select your login portal tab below to access your dedicated dashboard.</p>
+    </div>
+
+    <!-- LOGIN DASHBOARD BOX -->
+    <div class="rr-login-container">
+      
+      <!-- TOP LOGIN TABS -->
+      <div class="rr-login-header">
+        <div style="display:flex; align-items:center; justify-content:center; gap:0.6rem; margin-bottom:0.5rem;">
+          <img src="./assets/logo.jpg" alt="RentRide Logo" style="height:36px; border-radius:4px; background:#FFF; padding:2px;">
+          <h2 style="font-size:1.45rem; font-weight:900; color:#FFFFFF;">Portal Sign In</h2>
+        </div>
+        <p style="font-size:0.85rem; color:#94A3B8; margin-bottom:0.8rem;">Select your role login tab below:</p>
+
+        <div class="rr-login-tabs">
+          <button onclick="switchHomeLoginTab('customer')" id="homeTabCustomer" class="rr-tab-btn active">👤 Customer Login</button>
+          <button onclick="switchHomeLoginTab('staff')" id="homeTabStaff" class="rr-tab-btn">🛠️ Staff Login</button>
+          <button onclick="switchHomeLoginTab('admin')" id="homeTabAdmin" class="rr-tab-btn">⚡ Admin Login</button>
+        </div>
+      </div>
+
+      <!-- LOGIN FORM BODY -->
+      <div style="padding:2.2rem;">
+        <div id="homeLoginError" style="display:none; color:var(--rf-status-red); background:var(--rf-status-red-light); padding:0.8rem; border-radius:6px; margin-bottom:1.2rem; font-size:0.88rem; font-weight:700;"></div>
+
+        <form onsubmit="handleHomeLoginSubmit(event)">
+          <div class="rf-form-group" style="margin-bottom:1.2rem;">
+            <label id="homeLoginUserLabel">Customer Username / Email</label>
+            <input type="text" id="homeLoginUsername" class="rf-form-control" placeholder="Enter username" required value="customer">
+          </div>
+          <div class="rf-form-group" style="margin-bottom:1.8rem;">
+            <label>Password</label>
+            <input type="password" id="homeLoginPassword" class="rf-form-control" placeholder="••••••••" required value="customer123">
+          </div>
+
+          <button type="submit" id="homeLoginSubmitBtn" class="rf-btn rf-btn-primary" style="width:100%; padding:0.9rem; font-size:1rem;">
+            Sign In to Customer Portal
+          </button>
+        </form>
+
+        <div id="homeTabHint" style="margin-top:1.5rem; text-align:center; padding:0.85rem; background:var(--rf-bg-main); border-radius:6px; border:1px solid var(--rf-border-light); font-size:0.85rem; color:var(--rf-text-secondary);">
+          <strong>Demo Customer:</strong> Use <code>customer</code> / <code>customer123</code>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="rf-footer" style="margin-top:5rem;">
+    <div class="rf-footer-bottom">
+      <div>&copy; 2026 RentRide System. Executive Vehicle Rental & Fleet Operations.</div>
+    </div>
+  </footer>
+
+  <script src="./js/api-client.js"></script>
+  <script src="./js/auth-manager.js"></script>
+  <script>
+    let currentHomeTab = 'customer';
+
+    function switchHomeLoginTab(tab) {
+      currentHomeTab = tab;
+      const bCust = document.getElementById('homeTabCustomer');
+      const bStaff = document.getElementById('homeTabStaff');
+      const bAdmin = document.getElementById('homeTabAdmin');
+      const label = document.getElementById('homeLoginUserLabel');
+      const inputUser = document.getElementById('homeLoginUsername');
+      const inputPass = document.getElementById('homeLoginPassword');
+      const submitBtn = document.getElementById('homeLoginSubmitBtn');
+      const hint = document.getElementById('homeTabHint');
+
+      bCust.classList.remove('active');
+      bStaff.classList.remove('active');
+      bAdmin.classList.remove('active');
+
+      if (tab === 'customer') {
+        bCust.classList.add('active');
+        label.innerText = 'Customer Username / Email';
+        inputUser.value = 'customer';
+        inputPass.value = 'customer123';
+        submitBtn.innerText = 'Sign In to Customer Portal';
+        hint.innerHTML = '<strong>Demo Customer Account:</strong> Use <code>customer</code> / <code>customer123</code>';
+      } else if (tab === 'staff') {
+        bStaff.classList.add('active');
+        label.innerText = 'Staff Employee Code / Username';
+        inputUser.value = 'staff';
+        inputPass.value = 'staff123';
+        submitBtn.innerText = 'Sign In to Staff Operations Portal';
+        hint.innerHTML = '<strong>Demo Staff Account:</strong> Use <code>staff</code> / <code>staff123</code>';
+      } else if (tab === 'admin') {
+        bAdmin.classList.add('active');
+        label.innerText = 'Administrator Username';
+        inputUser.value = 'admin';
+        inputPass.value = 'admin123';
+        submitBtn.innerText = 'Sign In to Admin Executive Dashboard';
+        hint.innerHTML = '<strong>Demo Admin Account:</strong> Use <code>admin</code> / <code>admin123</code>';
+      }
+    }
+
+    async function handleHomeLoginSubmit(e) {
+      e.preventDefault();
+      const errorDiv = document.getElementById('homeLoginError');
+      errorDiv.style.display = 'none';
+
+      const username = document.getElementById('homeLoginUsername').value;
+      const password = document.getElementById('homeLoginPassword').value;
+
+      try {
+        const data = await ApiClient.post('/auth/login', { username, password });
+        AuthManager.login(data.token, data);
+
+        if (data.roles.includes('ADMIN')) {
+          window.location.href = './pages/admin-dashboard.html';
+        } else if (data.roles.includes('STAFF') || data.roles.includes('FLEET_MANAGER')) {
+          window.location.href = './pages/staff-portal.html';
+        } else {
+          window.location.href = './pages/customer-dashboard.html';
+        }
+      } catch (err) {
+        errorDiv.innerText = err.message || 'Login failed';
+        errorDiv.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

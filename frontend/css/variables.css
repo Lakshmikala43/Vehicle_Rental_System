@@ -1,0 +1,50 @@
+/* ============================================================================
+   RentRide Design System Variables - Premium Gray & White Palette
+   Palette: White (#FFFFFF / #F8FAFC) & Charcoal Slate Gray (#0F172A / #334155 / #475569)
+   ============================================================================ */
+
+:root {
+  /* Surfaces & Backgrounds */
+  --rf-bg-main: #F8FAFC;          /* Ice Off-White Light Neutral */
+  --rf-bg-surface: #F1F5F9;       /* Slate Light Neutral Surface */
+  --rf-bg-card: #FFFFFF;          /* Pure White Card */
+  --rf-surface-dark: #0F172A;     /* Deep Charcoal Slate */
+  --rf-surface-graphite: #1E293B; /* Slate Dark */
+  --rf-surface-card-dark: #1E293B;
+
+  /* Primary Brand & Accents: Premium Metallic Slate Gray */
+  --rf-accent-yellow: #334155;    /* Slate Gray Primary Accent */
+  --rf-accent-yellow-bright: #64748B; /* Cool Silver Gray */
+  --rf-accent-yellow-hover: #0F172A;
+  --rf-accent-yellow-light: #E2E8F0; /* Soft Light Gray Tint */
+
+  /* Semantic Status Colors */
+  --rf-status-green: #16A34A;     /* Success Green */
+  --rf-status-green-light: #DCFCE7;
+  --rf-status-amber: #475569;     /* Warning Gray */
+  --rf-status-amber-light: #E2E8F0;
+  --rf-status-red: #DC2626;       /* Error Red */
+  --rf-status-red-light: #FEE2E2;
+  --rf-status-gray: #64748B;      /* Neutral Slate */
+
+  /* Text & Borders */
+  --rf-text-primary: #0F172A;     /* Deep Slate Black */
+  --rf-text-secondary: #475569;   /* Muted Slate Gray */
+  --rf-text-muted: #94A3B8;
+  --rf-text-on-dark: #FFFFFF;
+  --rf-border-light: #E2E8F0;
+  --rf-border-dark: #475569;
+
+  /* Shadows & Curves */
+  --rf-shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.06);
+  --rf-shadow-md: 0 6px 16px rgba(15, 23, 42, 0.10);
+  --rf-shadow-lg: 0 12px 30px rgba(15, 23, 42, 0.16);
+  --rf-radius-sm: 6px;
+  --rf-radius-md: 10px;
+  --rf-radius-lg: 16px;
+
+  /* Fonts & Transitions */
+  --rf-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --rf-transition-fast: 0.18s ease;
+  --rf-transition-normal: 0.28s ease;
+}

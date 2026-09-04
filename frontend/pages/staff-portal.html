@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Portal & Operations – RentRide</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboards.css">
+</head>
+<body>
+
+  <!-- ROLE-SCOPED STAFF HEADER WITH OFFICIAL LOGO IMAGE -->
+  <header class="rf-header">
+    <a href="../index.html" class="rf-brand">
+      <img src="../assets/logo.jpg" alt="RentRide Logo" class="rf-brand-img">
+      <div style="font-size:1.55rem; font-weight:900; letter-spacing:-0.5px;">Rent<span style="color:var(--rf-accent-yellow-bright);">Ride</span></div>
+    </a>
+    <ul class="rf-nav">
+      <li><a href="./staff-portal.html" class="active">Staff Operations</a></li>
+      <li><a href="./fleet-board.html">Fleet Map Board</a></li>
+    </ul>
+    <div id="navAuthActions" class="rf-header-actions"></div>
+  </header>
+
+  <main class="rf-container" style="padding-top:2.5rem;">
+    <div style="margin-bottom:2rem;">
+      <h1 class="rf-section-title">Staff Operations & Branch Portal</h1>
+      <p class="rf-section-subtitle">Process vehicle check-in/check-out, perform digital inspections, and log damage assessments.</p>
+    </div>
+
+    <!-- TABS -->
+    <div style="display:flex; gap:1.2rem; margin-bottom:2.2rem; border-bottom:2px solid var(--rf-border-light); padding-bottom:0.6rem;">
+      <button onclick="switchTab('checkin')" id="tabBtnCheckin" class="rf-btn rf-btn-primary">Pickup / Return Check-In</button>
+      <button onclick="switchTab('inspection')" id="tabBtnInspection" class="rf-btn rf-btn-secondary">Visual Damage Inspection Diagram</button>
+    </div>
+
+    <!-- TAB 1: CHECK-IN / CHECK-OUT -->
+    <div id="tabCheckin" style="display:block;">
+      <div class="rf-table-wrap">
+        <div style="padding:1.3rem 1.6rem; background:#0F172A; color:var(--rf-accent-yellow-bright); border-bottom:2px solid var(--rf-accent-yellow); font-weight:900; font-size:1.15rem;">
+          Active Reservations Awaiting Pickup / Return Processing
+        </div>
+        <table class="rf-table">
+          <thead>
+            <tr>
+              <th>Booking Ref</th>
+              <th>Customer</th>
+              <th>Vehicle</th>
+              <th>Branch</th>
+              <th>Pickup Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="staffBookingsTable">
+            <tr>
+              <td colspan="7" style="text-align:center; padding:2rem; color:var(--rf-text-muted);">Loading active reservations...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2: VISUAL INSPECTION DIAGRAM -->
+    <div id="tabInspection" style="display:none;">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:2.2rem; align-items:start;">
+        <div id="inspectionCanvasContainer"></div>
+
+        <div style="background:#FFFFFF; border:2px solid var(--rf-border-light); border-radius:var(--rf-radius-md); padding:2rem; box-shadow:var(--rf-shadow-sm);">
+          <h3 style="font-size:1.3rem; font-weight:900; margin-bottom:1.2rem; color:#0F172A;">Log Component Damage Report</h3>
+          <form onsubmit="handleDamageSubmit(event)">
+            <div class="rf-form-group" style="margin-bottom:1rem;">
+              <label>Selected Vehicle Zone</label>
+              <input type="text" id="dmgSelectedZone" class="rf-form-control" readonly value="part_hood" style="font-weight:900; color:#0F172A; background:var(--rf-accent-yellow-light);">
+            </div>
+            <div class="rf-form-group" style="margin-bottom:1rem;">
+              <label>Vehicle ID / VIN</label>
+              <input type="text" id="dmgVehicleId" class="rf-form-control" placeholder="1" value="1">
+            </div>
+            <div class="rf-form-group" style="margin-bottom:1rem;">
+              <label>Severity Level</label>
+              <select id="dmgSeverity" class="rf-form-control">
+                <option value="MINOR">MINOR (Scratch / Dent)</option>
+                <option value="MAJOR">MAJOR (Deep Dent / Light Crack)</option>
+                <option value="SEVERE">SEVERE (Engine / Structural Damage)</option>
+              </select>
+            </div>
+            <div class="rf-form-group" style="margin-bottom:1rem;">
+              <label>Estimated Repair Cost (₹)</label>
+              <input type="number" id="dmgCost" class="rf-form-control" placeholder="3500" value="3500">
+            </div>
+            <div class="rf-form-group" style="margin-bottom:1.6rem;">
+              <label>Damage Notes & Description</label>
+              <textarea id="dmgNotes" class="rf-form-control" rows="3" placeholder="Scratches observed on front hood right side during customer return inspection."></textarea>
+            </div>
+            <button type="submit" class="rf-btn rf-btn-primary" style="width:100%;">Submit Damage Assessment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rf-footer">
+    <div class="rf-footer-bottom">
+      <div>&copy; 2026 RentRide System. Staff Operations Module.</div>
+    </div>
+  </footer>
+
+  <script src="../js/api-client.js"></script>
+  <script src="../js/auth-manager.js"></script>
+  <script src="../js/inspection-canvas.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStaffBookings();
+      InspectionCanvas.renderDiagram('inspectionCanvasContainer', (partId) => {
+        document.getElementById('dmgSelectedZone').value = partId;
+      });
+    });
+
+    function switchTab(tab) {
+      document.getElementById('tabCheckin').style.display = tab === 'checkin' ? 'block' : 'none';
+      document.getElementById('tabInspection').style.display = tab === 'inspection' ? 'block' : 'none';
+      document.getElementById('tabBtnCheckin').className = tab === 'checkin' ? 'rf-btn rf-btn-primary' : 'rf-btn rf-btn-secondary';
+      document.getElementById('tabBtnInspection').className = tab === 'inspection' ? 'rf-btn rf-btn-primary' : 'rf-btn rf-btn-secondary';
+    }
+
+    async function loadStaffBookings() {
+      const tbody = document.getElementById('staffBookingsTable');
+      try {
+        const bookings = await ApiClient.get('/bookings');
+        if (!bookings || bookings.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:2rem;">No active reservations requiring staff action.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = bookings.map(b => `
+          <tr>
+            <td><strong>${b.bookingReference}</strong></td>
+            <td>${b.customer.fullName}</td>
+            <td>${b.vehicle.model.brand.name} ${b.vehicle.model.modelName}</td>
+            <td>${b.pickupBranch.name}</td>
+            <td>${b.pickupDateTime.replace('T', ' ')}</td>
+            <td><span class="rf-badge ${b.status === 'CONFIRMED' ? 'rf-badge-available' : 'rf-badge-reserved'}">${b.status}</span></td>
+            <td>
+              ${b.status === 'CONFIRMED' || b.status === 'PAYMENT_PENDING' ? `<button onclick="processInspection(${b.id}, 'PICKUP')" class="rf-btn rf-btn-primary" style="padding:0.35rem 0.8rem; font-size:0.82rem;">Process Pickup</button>` : ''}
+              ${b.status === 'ACTIVE' ? `<button onclick="processInspection(${b.id}, 'RETURN')" class="rf-btn rf-btn-secondary" style="padding:0.35rem 0.8rem; font-size:0.82rem;">Process Return</button>` : ''}
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:2rem; color:var(--rf-status-red);">Error loading bookings: ${e.message}</td></tr>`;
+      }
+    }
+
+    async function processInspection(bookingId, type) {
+      try {
+        const bookings = await ApiClient.get(`/bookings`);
+        const target = bookings.find(b => b.id === bookingId);
+
+        await ApiClient.post('/inspection', {
+          booking: { id: bookingId },
+          vehicle: { id: target.vehicle.id },
+          inspectionType: type,
+          inspectorId: 2,
+          odometerReading: target.vehicle.odometerKm + 150,
+          fuelLevelPercent: 90,
+          overallCondition: 'EXCELLENT',
+          notes: `${type} inspection completed cleanly by branch staff.`
+        });
+
+        alert(`${type} Inspection completed! Booking updated.`);
+        loadStaffBookings();
+      } catch (e) {
+        alert("Inspection failed: " + e.message);
+      }
+    }
+
+    async function handleDamageSubmit(e) {
+      e.preventDefault();
+      const vehicleId = parseInt(document.getElementById('dmgVehicleId').value);
+      const severity = document.getElementById('dmgSeverity').value;
+      const estimatedRepairCost = parseFloat(document.getElementById('dmgCost').value);
+      const description = document.getElementById('dmgNotes').value;
+
+      try {
+        await ApiClient.post('/inspection/damage', {
+          vehicle: { id: vehicleId },
+          severity,
+          estimatedRepairCost,
+          description
+        });
+        alert("Damage Report logged! Vehicle status updated to DAMAGED.");
+      } catch (err) {
+        alert("Failed to log damage: " + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Catalog & Filters – RentRide</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboards.css">
+</head>
+<body>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="rf-header">
+    <a href="../index.html" class="rf-brand">
+      <div style="width:38px; height:38px; background:var(--rf-accent-yellow); border-radius:8px; display:grid; place-items:center; box-shadow:0 4px 12px rgba(234,179,8,0.4);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path>
+          <circle cx="7" cy="17" r="2"></circle>
+          <circle cx="17" cy="17" r="2"></circle>
+        </svg>
+      </div>
+      <div style="font-size:1.5rem; font-weight:900; letter-spacing:-0.5px;">Rent<span style="color:var(--rf-accent-yellow-bright);">Ride</span></div>
+    </a>
+    <ul class="rf-nav">
+      <li><a href="./customer-dashboard.html">My Rentals & Bookings</a></li>
+      <li><a href="./search.html" class="active">Search Vehicles</a></li>
+    </ul>
+    <div id="navAuthActions" class="rf-header-actions"></div>
+  </header>
+
+  <main class="rf-container" style="padding-top:2.5rem;">
+    <div style="margin-bottom:2rem;">
+      <h1 class="rf-section-title">Vehicle Search & Catalog</h1>
+      <p class="rf-section-subtitle">Filter our RentRide fleet by category, fuel type, transmission, or availability.</p>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div style="background:#FFFFFF; border:2px solid var(--rf-border-light); border-radius:var(--rf-radius-lg); padding:1.5rem; margin-bottom:2.2rem; box-shadow:var(--rf-shadow-sm);">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)) auto; gap:1.2rem; align-items:end;">
+        <div class="rf-form-group">
+          <label>Vehicle Category</label>
+          <select id="filterCategory" class="rf-form-control" onchange="App.loadCatalogVehicles()">
+            <option value="">All Categories</option>
+            <option value="SUV">SUV</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Electric">Electric Vehicle (EV)</option>
+            <option value="Luxury">Luxury</option>
+            <option value="Hatchback">Hatchback</option>
+          </select>
+        </div>
+        <div class="rf-form-group">
+          <label>Fuel Type</label>
+          <select id="filterFuel" class="rf-form-control" onchange="App.loadCatalogVehicles()">
+            <option value="">All Fuel Types</option>
+            <option value="PETROL">Petrol</option>
+            <option value="DIESEL">Diesel</option>
+            <option value="ELECTRIC">Electric</option>
+          </select>
+        </div>
+        <div class="rf-form-group">
+          <label>Transmission</label>
+          <select id="filterTransmission" class="rf-form-control" onchange="App.loadCatalogVehicles()">
+            <option value="">All Transmissions</option>
+            <option value="AUTOMATIC">Automatic</option>
+            <option value="MANUAL">Manual</option>
+          </select>
+        </div>
+        <button onclick="App.loadCatalogVehicles()" class="rf-btn rf-btn-primary" style="padding:0.75rem 1.6rem;">Apply Filters</button>
+      </div>
+    </div>
+
+    <!-- CATALOG VEHICLES GRID -->
+    <div id="searchVehiclesCatalogGrid" class="rf-grid-3"></div>
+  </main>
+
+  <footer class="rf-footer">
+    <div class="rf-footer-bottom">
+      <div>&copy; 2026 RentRide System. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/api-client.js"></script>
+  <script src="../js/auth-manager.js"></script>
+  <script src="../js/payment-simulator.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

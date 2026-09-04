@@ -1,0 +1,241 @@
+/* ============================================================================
+   RentRide Components & UI Elements - Premium Gray & White Theme
+   ============================================================================ */
+
+/* VEHICLE CARD */
+.rf-card {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--rf-border-light);
+  border-radius: var(--rf-radius-md);
+  overflow: hidden;
+  box-shadow: var(--rf-shadow-sm);
+  transition: transform var(--rf-transition-fast), box-shadow var(--rf-transition-fast), border-color var(--rf-transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.rf-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--rf-shadow-md);
+  border-color: var(--rf-accent-yellow);
+}
+
+.rf-card-image-wrap {
+  position: relative;
+  height: 210px;
+  background-color: #0F172A;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.rf-card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rf-card-badge-top {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.rf-card-body {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.rf-card-category {
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: #FFFFFF;
+  background-color: var(--rf-accent-yellow);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 0.6rem;
+}
+
+.rf-card-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  color: #0F172A;
+}
+
+.rf-card-specs {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.88rem;
+  color: var(--rf-text-secondary);
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rf-border-light);
+}
+
+.rf-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.rf-card-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rf-card-price {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #0F172A;
+}
+
+.rf-card-price span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--rf-text-secondary);
+}
+
+/* BADGES */
+.rf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.rf-badge-available {
+  background-color: var(--rf-accent-yellow-light);
+  color: #0F172A;
+  border: 1.5px solid var(--rf-accent-yellow);
+}
+
+.rf-badge-reserved {
+  background-color: #0F172A;
+  color: #FFFFFF;
+  border: 1.5px solid #0F172A;
+}
+
+.rf-badge-rented {
+  background-color: #F1F5F9;
+  color: #0F172A;
+  border: 1.5px solid #CBD5E1;
+}
+
+.rf-badge-maintenance, .rf-badge-damaged {
+  background-color: var(--rf-status-red-light);
+  color: var(--rf-status-red);
+  border: 1.5px solid var(--rf-status-red);
+}
+
+/* LOGIN TAB BUTTONS */
+.rf-tab-btn, .rr-tab-btn {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  background-color: #1E293B;
+  color: #94A3B8;
+  border: 1.5px solid var(--rf-border-dark);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all var(--rf-transition-fast);
+}
+
+.rf-tab-btn.active, .rr-tab-btn.active {
+  background-color: var(--rf-accent-yellow);
+  color: #FFFFFF;
+  border-color: var(--rf-accent-yellow);
+}
+
+.rf-tab-btn:hover:not(.active), .rr-tab-btn:hover:not(.active) {
+  background-color: #334155;
+  color: #FFFFFF;
+}
+
+/* MODAL DIALOG */
+.rf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(5px);
+  display: grid;
+  place-items: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--rf-transition-fast);
+}
+
+.rf-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rf-modal {
+  background-color: #FFFFFF;
+  border-radius: var(--rf-radius-lg);
+  width: 90%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--rf-accent-yellow);
+}
+
+.rf-modal-header {
+  padding: 1.3rem 1.8rem;
+  background-color: #0F172A;
+  color: #FFFFFF;
+  border-bottom: 2px solid var(--rf-accent-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rf-modal-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--rf-accent-yellow-bright);
+}
+
+.rf-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #FFFFFF;
+  transition: color var(--rf-transition-fast);
+}
+
+.rf-modal-close:hover {
+  color: var(--rf-accent-yellow-bright);
+}
+
+.rf-modal-body {
+  padding: 1.8rem;
+}
+
+.rf-modal-footer {
+  padding: 1.3rem 1.8rem;
+  border-top: 1px solid var(--rf-border-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  background-color: var(--rf-bg-main);
+}

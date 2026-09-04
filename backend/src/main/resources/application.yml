@@ -1,0 +1,57 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: ridefleet-backend
+
+  # Database Configuration (Default: H2 In-Memory for instant local execution)
+  datasource:
+    url: jdbc:h2:mem:ridefleetdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+  # For MySQL deployment, uncomment below:
+  # datasource:
+  #   url: jdbc:mysql://localhost:3306/ridefleet?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+  #   driver-class-name: com.mysql.cj.jdbc.Driver
+  #   username: root
+  #   password: rootpassword
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+# Application Custom Configuration
+ridefleet:
+  jwt:
+    secret: RideFleetSuperSecureSecretKeyThatIsAtLeast256BitsLongForHMACSHA256Signature2026!
+    expiration-ms: 86400000 # 24 Hours
+  fleet:
+    simulation-enabled: true
+    gps-interval-ms: 5000
+    maintenance-threshold-km: 5000
+    insurance-warning-days: 30
+  pricing:
+    default-tax-percent: 18.0
+    weekend-multiplier: 1.15
+    high-demand-multiplier: 1.25

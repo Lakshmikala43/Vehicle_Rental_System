@@ -1,0 +1,30 @@
+{
+  "name": "rentride-vehicle-rental-fleet-system",
+  "version": "1.0.0",
+  "description": "RentRide - Enterprise Vehicle Rental & Fleet Management System",
+  "main": "frontend/js/app.js",
+  "scripts": {
+    "start": "python -m http.server 3000 --directory frontend",
+    "build": "cd backend && mvn clean package -DskipTests",
+    "test": "cd backend && mvn test",
+    "docker:build": "docker build -t rentride:latest .",
+    "docker:run": "docker run -p 8080:8080 -p 3000:3000 rentride:latest"
+  },
+  "keywords": [
+    "vehicle-rental",
+    "fleet-management",
+    "java",
+    "spring-boot",
+    "javascript"
+  ],
+  "author": "Engineering Team",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

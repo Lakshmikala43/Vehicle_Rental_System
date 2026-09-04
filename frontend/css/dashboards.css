@@ -1,0 +1,157 @@
+/* ============================================================================
+   RentRide Dashboard & Operations Visualizer Styles (dashboards.css)
+   Premium Gray & White Palette
+   ============================================================================ */
+
+.rf-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.6rem;
+  margin-bottom: 2.8rem;
+}
+
+.rf-kpi-card {
+  background-color: #FFFFFF;
+  border: 2px solid var(--rf-border-light);
+  border-radius: var(--rf-radius-md);
+  padding: 1.6rem;
+  box-shadow: var(--rf-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--rf-transition-fast), transform var(--rf-transition-fast);
+}
+
+.rf-kpi-card:hover {
+  border-color: var(--rf-accent-yellow);
+  transform: translateY(-3px);
+}
+
+.rf-kpi-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--rf-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.rf-kpi-value {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.rf-kpi-trend {
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.rf-kpi-trend.positive { color: var(--rf-status-green); }
+.rf-kpi-trend.neutral { color: var(--rf-accent-yellow); }
+.rf-kpi-trend.negative { color: var(--rf-status-red); }
+
+/* TABLES */
+.rf-table-wrap {
+  background-color: #FFFFFF;
+  border: 2px solid var(--rf-border-light);
+  border-radius: var(--rf-radius-md);
+  overflow: hidden;
+  box-shadow: var(--rf-shadow-sm);
+}
+
+.rf-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.rf-table th {
+  background-color: #0F172A;
+  color: #FFFFFF;
+  padding: 1.1rem 1.4rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 2px solid var(--rf-accent-yellow);
+}
+
+.rf-table td {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--rf-border-light);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.rf-table tbody tr:hover {
+  background-color: var(--rf-accent-yellow-light);
+}
+
+/* FLEET BOARD CANVAS CONTAINER */
+.rf-fleet-board-container {
+  background-color: #0F172A;
+  border-radius: var(--rf-radius-lg);
+  padding: 1.8rem;
+  border: 2px solid var(--rf-accent-yellow);
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.6);
+  color: #FFFFFF;
+}
+
+.rf-fleet-board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.rf-canvas-wrap {
+  width: 100%;
+  height: 490px;
+  background-color: #0B132B;
+  border-radius: var(--rf-radius-md);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #1E293B;
+}
+
+canvas#fleetMapCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* VISUAL INSPECTION DIAGRAM */
+.rf-inspection-diagram-wrap {
+  background-color: #FFFFFF;
+  border: 2px solid var(--rf-border-light);
+  border-radius: var(--rf-radius-md);
+  padding: 1.8rem;
+  text-align: center;
+}
+
+.rf-car-schema-svg {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  cursor: pointer;
+}
+
+.rf-car-part {
+  fill: #F1F5F9;
+  stroke: #0F172A;
+  stroke-width: 2.5;
+  transition: fill var(--rf-transition-fast);
+}
+
+.rf-car-part:hover {
+  fill: var(--rf-accent-yellow-bright);
+}
+
+.rf-car-part.damaged {
+  fill: #DC2626;
+}
