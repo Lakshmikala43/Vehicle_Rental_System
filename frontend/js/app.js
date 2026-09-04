@@ -1,6 +1,6 @@
 /**
- * RideFleet Application Main Controller (app.js)
- * High-Performance Parallel Loader Architecture
+ * RentRide Application Main Controller (app.js)
+ * Features Top 25 Best-Selling Vehicles & Bikes Image Mapping Dictionary
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 class App {
   static init() {
-    // Parallelize catalog & recommendation requests for zero page lag
     if (document.getElementById('featuredVehiclesGrid')) {
       Promise.all([
         App.loadFeaturedVehicles(),
@@ -20,6 +19,47 @@ class App {
     if (document.getElementById('searchVehiclesCatalogGrid')) {
       App.loadCatalogVehicles();
     }
+  }
+
+  static getVehicleImageMap() {
+    return {
+      // Top 25 Best-Selling Cars & Bikes
+      'Swift ZXi': 'https://th.bing.com/th/id/OIP.S7ScK6Fk5vxdZbv_9Io1egHaEB?w=291&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
+      'Baleno Alpha': 'https://tse4.mm.bing.net/th/id/OIP.2ftDDcIYakK3ZZJ5h7wA5gHaE6?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
+      'Brezza ZXi+': 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80',
+      'Ertiga ZXi': 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
+      'Creta SX(O)': 'https://stimg.cardekho.com/images/carexteriorimages/630x420/Hyundai/Creta/8667/1744607863052/front-left-side-47.jpg',
+      'Dzire VXi': 'https://parkplus-bkt-img.parkplus.io/production/crawler/public/Crawler109bfd20590911f0a9bcce58840bfb61_20250705002951719874_49ea3e03-0c8d-49ed-99f8-a473d83bb707.jpg',
+      'Fronx Alpha Turbo': 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80',
+      'WagonR ZXi': 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80',
+      'Nexon Fearless+': 'https://images.91wheels.com/reviews/17524898407391000027296.jpg',
+      'Eeco 7-STR': 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
+      'Punch Creative': 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80',
+      'Scorpio-N Z8L': 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=600&q=80',
+      'Venue SX(O)': 'https://images.overdrive.in/wp-content/odgallery/2018/06/42884_Hyundai_Verna_2017-003.JPG',
+      'Seltos GTX+ Turbo': 'https://images10.gaadi.com/usedcar_image/4828380/original/processed_8adbcfa0-d1e3-4558-be37-4a5ba687368c.jpg',
+      'Grand Vitara Alpha Hybrid': 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+      'Tiago XZ+': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80',
+      'Innova Crysta VX': 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
+      'Bolero Neo N10': 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=600&q=80',
+      'Altroz XZ+': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80',
+      'Alto K10 VXi+': 'https://www.carandbike.com/_next/image?url=https:%2F%2Fimages.carandbike.com%2Fcar-images%2Fgallery%2Fmaruti-suzuki%2Falto-k10%2Fexterior%2Fmaruti-suzuki-alto-k10-leftsideview.jpg%3Fv%3D2022-09-02&w=1920&q=75',
+      'Exter SX(O) Connect': 'https://i.ytimg.com/vi/or1mwpwZt2s/maxresdefault.jpg',
+      'XUV700 AX7 Luxury': 'https://cdni.autocarindia.com/ExtraImages/20221111060434_XUV700_front_image.jpg',
+      'Carens Luxury Plus': 'https://www.jazzycars.in/wp-content/uploads/2023/02/k1-1.jpeg',
+      'Grand i10 Nios Asta': 'https://www.team-bhp.com/forum/attachments/test-drives-initial-ownership-reports/2072134d1603707906-red-pocket-rocket-hyundai-grand-i10-nios-asta-amt-petrol-review-car_front-34.jpg',
+      'Thar LX 4x4': 'https://i.pinimg.com/originals/a3/84/7b/a3847bbf103b0e9eecb6bc835c43b774.jpg',
+      '5 Series 530i': 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
+      'Model 3 Long Range': 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+      'Nexon EV Empowered+': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80',
+      'City ZX': 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
+      // Motorbikes
+      'Himalayan 450 Sherpa': 'https://motorrijder.be/wp-content/uploads/2024/01/2_Royal-Enfield-Himalayan-450-scaled.jpg',
+      'Ninja 400 ABS': 'https://static0.hotcarsimages.com/wordpress/wp-content/uploads/2022/09/Kawasaki-Ninja-400-ABS-Review-6.jpg',
+      '450X Apex EV': 'https://th.bing.com/th/id/OIP.9OHt8XyaWla9RYO42emhGQHaE8?r=0&o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3',
+      'Hunter 350 Dapper': 'https://cdn1.smartprix.com/rx-ikwmLoS9F-w1200-h1200/kwmLoS9F.jpg',
+      'R 1250 GS Adventure': 'https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?auto=format&fit=crop&w=600&q=80'
+    };
   }
 
   static async loadFeaturedVehicles() {
@@ -89,6 +129,7 @@ class App {
       return;
     }
 
+    const imageMap = App.getVehicleImageMap();
     const fallbackImages = [
       'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
       'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
@@ -96,29 +137,36 @@ class App {
       'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80'
     ];
 
-    container.innerHTML = vehicles.map((v, idx) => `
-      <div class="rf-card">
-        <div class="rf-card-image-wrap">
-          <img src="${fallbackImages[idx % fallbackImages.length]}" alt="${v.model.modelName}" loading="lazy">
-          <div class="rf-card-badge-top">
-            <span class="rf-badge ${v.status === 'AVAILABLE' ? 'rf-badge-available' : 'rf-badge-reserved'}">${v.status}</span>
+    container.innerHTML = vehicles.map((v, idx) => {
+      const modelName = v.model ? v.model.modelName : 'Vehicle';
+      const imgSrc = imageMap[modelName] || fallbackImages[idx % fallbackImages.length];
+      const category = v.model && v.model.type ? v.model.type.category : 'Fleet';
+      const brand = v.model && v.model.brand ? v.model.brand.name : 'RentRide';
+
+      return `
+        <div class="rf-card">
+          <div class="rf-card-image-wrap">
+            <img src="${imgSrc}" alt="${modelName}" loading="lazy" onerror="this.src='${fallbackImages[idx % fallbackImages.length]}'">
+            <div class="rf-card-badge-top">
+              <span class="rf-badge ${v.status === 'AVAILABLE' ? 'rf-badge-available' : 'rf-badge-reserved'}">${v.status}</span>
+            </div>
+          </div>
+          <div class="rf-card-body">
+            <div class="rf-card-category">${category} • ${brand}</div>
+            <h3 class="rf-card-title">${modelName}</h3>
+            <div class="rf-card-specs">
+              <div class="rf-spec-item">👥 ${v.model ? v.model.seatingCapacity : 5} Seats</div>
+              <div class="rf-spec-item">⛽ ${v.model ? v.model.fuelType : 'Petrol'}</div>
+              <div class="rf-spec-item">⚙️ ${v.model ? v.model.transmissionType : 'Automatic'}</div>
+            </div>
+            <div class="rf-card-footer">
+              <div class="rf-card-price">₹${v.dailyRate} <span>/ day</span></div>
+              <button onclick="App.openBookingModal(${v.id})" class="rf-btn rf-btn-primary" style="padding:0.5rem 1.1rem; font-size:0.85rem;">Book Ride</button>
+            </div>
           </div>
         </div>
-        <div class="rf-card-body">
-          <div class="rf-card-category">${v.model.type.category} • ${v.model.brand.name}</div>
-          <h3 class="rf-card-title">${v.model.modelName}</h3>
-          <div class="rf-card-specs">
-            <div class="rf-spec-item">👥 ${v.model.seatingCapacity} Seats</div>
-            <div class="rf-spec-item">⛽ ${v.model.fuelType}</div>
-            <div class="rf-spec-item">⚙️ ${v.model.transmissionType}</div>
-          </div>
-          <div class="rf-card-footer">
-            <div class="rf-card-price">₹${v.dailyRate} <span>/ day</span></div>
-            <button onclick="App.openBookingModal(${v.id})" class="rf-btn rf-btn-primary" style="padding:0.5rem 1.1rem; font-size:0.85rem;">Book Ride</button>
-          </div>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   static async openBookingModal(vehicleId) {
