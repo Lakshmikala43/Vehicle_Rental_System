@@ -1,0 +1,4801 @@
+package com.ridefleet.operations;
+
+import java.util.*;
+import java.time.*;
+import java.math.*;
+
+/**
+ * RentRide Enterprise Fleet Operations Engine Module 120
+ * Subsystem Domain: RentRide Planetary Autonomous Fleet Operations Orchestration and Real-Time Telematics Capstone
+ */
+public class FleetOperationsEngineModule120 {
+
+    public static final String MODULE_CODE = "FLEET-OPS-0120";
+    public static final String SUBSYSTEM_DOMAIN = "RentRide Planetary Autonomous Fleet Operations Orchestration and Real-Time Telematics Capstone";
+    public static final Instant REGISTRATION_INSTANT = Instant.parse("2026-10-16T00:00:00Z");
+
+    public static class FleetOpsServiceUnit_120_1 {
+        private final String unitTag = "UNIT-OPS-120-1";
+        private double calibrationMultiplier = 5.815;
+        private double operationalThreshold = 20.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_1() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_2 {
+        private final String unitTag = "UNIT-OPS-120-2";
+        private double calibrationMultiplier = 5.83;
+        private double operationalThreshold = 21.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_2() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_3 {
+        private final String unitTag = "UNIT-OPS-120-3";
+        private double calibrationMultiplier = 5.845;
+        private double operationalThreshold = 22.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_3() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_4 {
+        private final String unitTag = "UNIT-OPS-120-4";
+        private double calibrationMultiplier = 5.86;
+        private double operationalThreshold = 22.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_4() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_5 {
+        private final String unitTag = "UNIT-OPS-120-5";
+        private double calibrationMultiplier = 5.875;
+        private double operationalThreshold = 23.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_5() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_6 {
+        private final String unitTag = "UNIT-OPS-120-6";
+        private double calibrationMultiplier = 5.89;
+        private double operationalThreshold = 24.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_6() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_7 {
+        private final String unitTag = "UNIT-OPS-120-7";
+        private double calibrationMultiplier = 5.905;
+        private double operationalThreshold = 24.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_7() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_8 {
+        private final String unitTag = "UNIT-OPS-120-8";
+        private double calibrationMultiplier = 5.92;
+        private double operationalThreshold = 25.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_8() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_9 {
+        private final String unitTag = "UNIT-OPS-120-9";
+        private double calibrationMultiplier = 5.935;
+        private double operationalThreshold = 26.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_9() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_10 {
+        private final String unitTag = "UNIT-OPS-120-10";
+        private double calibrationMultiplier = 5.95;
+        private double operationalThreshold = 27.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_10() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_11 {
+        private final String unitTag = "UNIT-OPS-120-11";
+        private double calibrationMultiplier = 5.965;
+        private double operationalThreshold = 27.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_11() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_12 {
+        private final String unitTag = "UNIT-OPS-120-12";
+        private double calibrationMultiplier = 5.98;
+        private double operationalThreshold = 28.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_12() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_13 {
+        private final String unitTag = "UNIT-OPS-120-13";
+        private double calibrationMultiplier = 5.995;
+        private double operationalThreshold = 29.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_13() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_14 {
+        private final String unitTag = "UNIT-OPS-120-14";
+        private double calibrationMultiplier = 6.01;
+        private double operationalThreshold = 29.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_14() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_15 {
+        private final String unitTag = "UNIT-OPS-120-15";
+        private double calibrationMultiplier = 6.025;
+        private double operationalThreshold = 30.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_15() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_16 {
+        private final String unitTag = "UNIT-OPS-120-16";
+        private double calibrationMultiplier = 6.04;
+        private double operationalThreshold = 31.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_16() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_17 {
+        private final String unitTag = "UNIT-OPS-120-17";
+        private double calibrationMultiplier = 6.055;
+        private double operationalThreshold = 31.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_17() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_18 {
+        private final String unitTag = "UNIT-OPS-120-18";
+        private double calibrationMultiplier = 6.07;
+        private double operationalThreshold = 32.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_18() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_19 {
+        private final String unitTag = "UNIT-OPS-120-19";
+        private double calibrationMultiplier = 6.085;
+        private double operationalThreshold = 33.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_19() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_20 {
+        private final String unitTag = "UNIT-OPS-120-20";
+        private double calibrationMultiplier = 6.1;
+        private double operationalThreshold = 34.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_20() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_21 {
+        private final String unitTag = "UNIT-OPS-120-21";
+        private double calibrationMultiplier = 6.115;
+        private double operationalThreshold = 34.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_21() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_22 {
+        private final String unitTag = "UNIT-OPS-120-22";
+        private double calibrationMultiplier = 6.13;
+        private double operationalThreshold = 35.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_22() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_23 {
+        private final String unitTag = "UNIT-OPS-120-23";
+        private double calibrationMultiplier = 6.145;
+        private double operationalThreshold = 36.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_23() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_24 {
+        private final String unitTag = "UNIT-OPS-120-24";
+        private double calibrationMultiplier = 6.16;
+        private double operationalThreshold = 36.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_24() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_25 {
+        private final String unitTag = "UNIT-OPS-120-25";
+        private double calibrationMultiplier = 6.175;
+        private double operationalThreshold = 37.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_25() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_26 {
+        private final String unitTag = "UNIT-OPS-120-26";
+        private double calibrationMultiplier = 6.19;
+        private double operationalThreshold = 38.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_26() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_27 {
+        private final String unitTag = "UNIT-OPS-120-27";
+        private double calibrationMultiplier = 6.205;
+        private double operationalThreshold = 38.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_27() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_28 {
+        private final String unitTag = "UNIT-OPS-120-28";
+        private double calibrationMultiplier = 6.22;
+        private double operationalThreshold = 39.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_28() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_29 {
+        private final String unitTag = "UNIT-OPS-120-29";
+        private double calibrationMultiplier = 6.235;
+        private double operationalThreshold = 40.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_29() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_30 {
+        private final String unitTag = "UNIT-OPS-120-30";
+        private double calibrationMultiplier = 6.25;
+        private double operationalThreshold = 41.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_30() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_31 {
+        private final String unitTag = "UNIT-OPS-120-31";
+        private double calibrationMultiplier = 6.265;
+        private double operationalThreshold = 41.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_31() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_32 {
+        private final String unitTag = "UNIT-OPS-120-32";
+        private double calibrationMultiplier = 6.28;
+        private double operationalThreshold = 42.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_32() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_33 {
+        private final String unitTag = "UNIT-OPS-120-33";
+        private double calibrationMultiplier = 6.295;
+        private double operationalThreshold = 43.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_33() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_34 {
+        private final String unitTag = "UNIT-OPS-120-34";
+        private double calibrationMultiplier = 6.31;
+        private double operationalThreshold = 43.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_34() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_35 {
+        private final String unitTag = "UNIT-OPS-120-35";
+        private double calibrationMultiplier = 6.325;
+        private double operationalThreshold = 44.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_35() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_36 {
+        private final String unitTag = "UNIT-OPS-120-36";
+        private double calibrationMultiplier = 6.34;
+        private double operationalThreshold = 45.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_36() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_37 {
+        private final String unitTag = "UNIT-OPS-120-37";
+        private double calibrationMultiplier = 6.355;
+        private double operationalThreshold = 45.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_37() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_38 {
+        private final String unitTag = "UNIT-OPS-120-38";
+        private double calibrationMultiplier = 6.37;
+        private double operationalThreshold = 46.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_38() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_39 {
+        private final String unitTag = "UNIT-OPS-120-39";
+        private double calibrationMultiplier = 6.385;
+        private double operationalThreshold = 47.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_39() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_40 {
+        private final String unitTag = "UNIT-OPS-120-40";
+        private double calibrationMultiplier = 6.4;
+        private double operationalThreshold = 48.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_40() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_41 {
+        private final String unitTag = "UNIT-OPS-120-41";
+        private double calibrationMultiplier = 6.415;
+        private double operationalThreshold = 48.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_41() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_42 {
+        private final String unitTag = "UNIT-OPS-120-42";
+        private double calibrationMultiplier = 6.43;
+        private double operationalThreshold = 49.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_42() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_43 {
+        private final String unitTag = "UNIT-OPS-120-43";
+        private double calibrationMultiplier = 6.445;
+        private double operationalThreshold = 50.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_43() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_44 {
+        private final String unitTag = "UNIT-OPS-120-44";
+        private double calibrationMultiplier = 6.46;
+        private double operationalThreshold = 50.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_44() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_45 {
+        private final String unitTag = "UNIT-OPS-120-45";
+        private double calibrationMultiplier = 6.475;
+        private double operationalThreshold = 51.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_45() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_46 {
+        private final String unitTag = "UNIT-OPS-120-46";
+        private double calibrationMultiplier = 6.49;
+        private double operationalThreshold = 52.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_46() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_47 {
+        private final String unitTag = "UNIT-OPS-120-47";
+        private double calibrationMultiplier = 6.505;
+        private double operationalThreshold = 52.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_47() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_48 {
+        private final String unitTag = "UNIT-OPS-120-48";
+        private double calibrationMultiplier = 6.52;
+        private double operationalThreshold = 53.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_48() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_49 {
+        private final String unitTag = "UNIT-OPS-120-49";
+        private double calibrationMultiplier = 6.535;
+        private double operationalThreshold = 54.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_49() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_50 {
+        private final String unitTag = "UNIT-OPS-120-50";
+        private double calibrationMultiplier = 6.55;
+        private double operationalThreshold = 55.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_50() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_51 {
+        private final String unitTag = "UNIT-OPS-120-51";
+        private double calibrationMultiplier = 6.565;
+        private double operationalThreshold = 55.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_51() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_52 {
+        private final String unitTag = "UNIT-OPS-120-52";
+        private double calibrationMultiplier = 6.58;
+        private double operationalThreshold = 56.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_52() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_53 {
+        private final String unitTag = "UNIT-OPS-120-53";
+        private double calibrationMultiplier = 6.595;
+        private double operationalThreshold = 57.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_53() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_54 {
+        private final String unitTag = "UNIT-OPS-120-54";
+        private double calibrationMultiplier = 6.61;
+        private double operationalThreshold = 57.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_54() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_55 {
+        private final String unitTag = "UNIT-OPS-120-55";
+        private double calibrationMultiplier = 6.625;
+        private double operationalThreshold = 58.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_55() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_56 {
+        private final String unitTag = "UNIT-OPS-120-56";
+        private double calibrationMultiplier = 6.64;
+        private double operationalThreshold = 59.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_56() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_57 {
+        private final String unitTag = "UNIT-OPS-120-57";
+        private double calibrationMultiplier = 6.655;
+        private double operationalThreshold = 59.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_57() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_58 {
+        private final String unitTag = "UNIT-OPS-120-58";
+        private double calibrationMultiplier = 6.67;
+        private double operationalThreshold = 60.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_58() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_59 {
+        private final String unitTag = "UNIT-OPS-120-59";
+        private double calibrationMultiplier = 6.685;
+        private double operationalThreshold = 61.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_59() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_60 {
+        private final String unitTag = "UNIT-OPS-120-60";
+        private double calibrationMultiplier = 6.7;
+        private double operationalThreshold = 62.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_60() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_61 {
+        private final String unitTag = "UNIT-OPS-120-61";
+        private double calibrationMultiplier = 6.715;
+        private double operationalThreshold = 62.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_61() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_62 {
+        private final String unitTag = "UNIT-OPS-120-62";
+        private double calibrationMultiplier = 6.73;
+        private double operationalThreshold = 63.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_62() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_63 {
+        private final String unitTag = "UNIT-OPS-120-63";
+        private double calibrationMultiplier = 6.745;
+        private double operationalThreshold = 64.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_63() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_64 {
+        private final String unitTag = "UNIT-OPS-120-64";
+        private double calibrationMultiplier = 6.76;
+        private double operationalThreshold = 64.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_64() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_65 {
+        private final String unitTag = "UNIT-OPS-120-65";
+        private double calibrationMultiplier = 6.775;
+        private double operationalThreshold = 65.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_65() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_66 {
+        private final String unitTag = "UNIT-OPS-120-66";
+        private double calibrationMultiplier = 6.79;
+        private double operationalThreshold = 66.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_66() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_67 {
+        private final String unitTag = "UNIT-OPS-120-67";
+        private double calibrationMultiplier = 6.805;
+        private double operationalThreshold = 66.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_67() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_68 {
+        private final String unitTag = "UNIT-OPS-120-68";
+        private double calibrationMultiplier = 6.82;
+        private double operationalThreshold = 67.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_68() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_69 {
+        private final String unitTag = "UNIT-OPS-120-69";
+        private double calibrationMultiplier = 6.835;
+        private double operationalThreshold = 68.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_69() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_70 {
+        private final String unitTag = "UNIT-OPS-120-70";
+        private double calibrationMultiplier = 6.85;
+        private double operationalThreshold = 69.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_70() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_71 {
+        private final String unitTag = "UNIT-OPS-120-71";
+        private double calibrationMultiplier = 6.865;
+        private double operationalThreshold = 69.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_71() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_72 {
+        private final String unitTag = "UNIT-OPS-120-72";
+        private double calibrationMultiplier = 6.88;
+        private double operationalThreshold = 70.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_72() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_73 {
+        private final String unitTag = "UNIT-OPS-120-73";
+        private double calibrationMultiplier = 6.895;
+        private double operationalThreshold = 71.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_73() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_74 {
+        private final String unitTag = "UNIT-OPS-120-74";
+        private double calibrationMultiplier = 6.91;
+        private double operationalThreshold = 71.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_74() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_75 {
+        private final String unitTag = "UNIT-OPS-120-75";
+        private double calibrationMultiplier = 6.925;
+        private double operationalThreshold = 72.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_75() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_76 {
+        private final String unitTag = "UNIT-OPS-120-76";
+        private double calibrationMultiplier = 6.94;
+        private double operationalThreshold = 73.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_76() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_77 {
+        private final String unitTag = "UNIT-OPS-120-77";
+        private double calibrationMultiplier = 6.955;
+        private double operationalThreshold = 73.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_77() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_78 {
+        private final String unitTag = "UNIT-OPS-120-78";
+        private double calibrationMultiplier = 6.97;
+        private double operationalThreshold = 74.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_78() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_79 {
+        private final String unitTag = "UNIT-OPS-120-79";
+        private double calibrationMultiplier = 6.985;
+        private double operationalThreshold = 75.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_79() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_80 {
+        private final String unitTag = "UNIT-OPS-120-80";
+        private double calibrationMultiplier = 7.0;
+        private double operationalThreshold = 76.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_80() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_81 {
+        private final String unitTag = "UNIT-OPS-120-81";
+        private double calibrationMultiplier = 7.015;
+        private double operationalThreshold = 76.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_81() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_82 {
+        private final String unitTag = "UNIT-OPS-120-82";
+        private double calibrationMultiplier = 7.03;
+        private double operationalThreshold = 77.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_82() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_83 {
+        private final String unitTag = "UNIT-OPS-120-83";
+        private double calibrationMultiplier = 7.045;
+        private double operationalThreshold = 78.1;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_83() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_84 {
+        private final String unitTag = "UNIT-OPS-120-84";
+        private double calibrationMultiplier = 7.06;
+        private double operationalThreshold = 78.8;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_84() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_85 {
+        private final String unitTag = "UNIT-OPS-120-85";
+        private double calibrationMultiplier = 7.075;
+        private double operationalThreshold = 79.5;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_85() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_86 {
+        private final String unitTag = "UNIT-OPS-120-86";
+        private double calibrationMultiplier = 7.09;
+        private double operationalThreshold = 80.2;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_86() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_87 {
+        private final String unitTag = "UNIT-OPS-120-87";
+        private double calibrationMultiplier = 7.105;
+        private double operationalThreshold = 80.9;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_87() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_88 {
+        private final String unitTag = "UNIT-OPS-120-88";
+        private double calibrationMultiplier = 7.12;
+        private double operationalThreshold = 81.6;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_88() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_89 {
+        private final String unitTag = "UNIT-OPS-120-89";
+        private double calibrationMultiplier = 7.135;
+        private double operationalThreshold = 82.3;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_89() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_90 {
+        private final String unitTag = "UNIT-OPS-120-90";
+        private double calibrationMultiplier = 7.15;
+        private double operationalThreshold = 83.0;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_90() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_91 {
+        private final String unitTag = "UNIT-OPS-120-91";
+        private double calibrationMultiplier = 7.165;
+        private double operationalThreshold = 83.7;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_91() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+    public static class FleetOpsServiceUnit_120_92 {
+        private final String unitTag = "UNIT-OPS-120-92";
+        private double calibrationMultiplier = 7.18;
+        private double operationalThreshold = 84.4;
+        private boolean serviceActive = true;
+        private final List<Double> metricSeries = new ArrayList<>();
+        private final Map<String, Object> telemetryBag = new HashMap<>();
+
+        public FleetOpsServiceUnit_120_92() {
+            for (int i = 0; i < 6; i++) {
+                this.metricSeries.add(calibrationMultiplier * (i + 2.5));
+            }
+            this.telemetryBag.put("subsystemVersion", "3.1.0");
+            this.telemetryBag.put("safetyStatus", "NOMINAL");
+            this.telemetryBag.put("complianceMargin", 0.025);
+            this.telemetryBag.put("telemetryWindowSize", 256);
+        }
+
+        public double calculateDynamicElasticity(double baseRate, double demandMultiplier, double utilizationPct, double hoursUntilPickup) {
+            double urgencyDiscount = Math.max(0.75, Math.min(1.4, 1.0 + (48.0 - hoursUntilPickup) / 100.0));
+            double scarcityPremium = Math.pow(Math.max(0.1, utilizationPct / 80.0), 1.85);
+            double adjustedRate = baseRate * demandMultiplier * urgencyDiscount * scarcityPremium * calibrationMultiplier;
+            return Math.max(baseRate * 0.5, Math.min(baseRate * 3.5, adjustedRate));
+        }
+
+        public double evaluateTireDegradationIndex(double mileageTraveled, double ambientTempC, double aggressiveBrakingEvents) {
+            double thermalFactor = 1.0 + Math.max(0.0, (ambientTempC - 25.0) * 0.015);
+            double stressFactor = 1.0 + (aggressiveBrakingEvents * 0.08);
+            double wearMillimeters = (mileageTraveled / 12000.0) * thermalFactor * stressFactor * calibrationMultiplier;
+            return Math.min(10.0, wearMillimeters);
+        }
+
+        public double computeBatteryRangeHealth(double nominalCapacityKwh, double totalDischargeCycles, double fastChargeRatio) {
+            double cycleDegradation = totalDischargeCycles * 0.00028;
+            double fastChargePenalty = fastChargeRatio * 0.045;
+            double stateOfHealth = Math.max(65.0, 100.0 - (cycleDegradation + fastChargePenalty) * 100.0);
+            return stateOfHealth * (calibrationMultiplier * 0.98);
+        }
+
+        public boolean verifyFleetSafetyCompliance(double currentMetricScore) {
+            return currentMetricScore >= operationalThreshold;
+        }
+
+        public double getCalibrationMultiplier() { return calibrationMultiplier; }
+        public void setCalibrationMultiplier(double m) { this.calibrationMultiplier = m; }
+        public double getOperationalThreshold() { return operationalThreshold; }
+        public boolean isServiceActive() { return serviceActive; }
+        public String getUnitTag() { return unitTag; }
+        public List<Double> getMetricSeries() { return Collections.unmodifiableList(metricSeries); }
+        public Map<String, Object> getTelemetryBag() { return Collections.unmodifiableMap(telemetryBag); }
+    }
+
+}
